@@ -2,6 +2,8 @@ package project.mass.project.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "division")
 public class Division {
@@ -14,34 +16,10 @@ public class Division {
     @Column(name = "division_name")
     private String divisionName;
 
+    @OneToMany(mappedBy = "division")
+    private List<Veterinarian> veterinarians;
+
     @ManyToOne
     @JoinColumn(name = "veterinarian_clinic_id")
     private VetClinic vetClinic;
-
-    public Division() {}
-
-    public Division(String divisionName, VetClinic vetClinic) {
-        this.divisionName = divisionName;
-        this.vetClinic = vetClinic;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getDivisionName() {
-        return divisionName;
-    }
-
-    public void setDivisionName(String divisionName) {
-        this.divisionName = divisionName;
-    }
-
-    public VetClinic getVetClinic() {
-        return vetClinic;
-    }
-
-    public void setVetClinic(VetClinic vetClinic) {
-        this.vetClinic = vetClinic;
-    }
 }

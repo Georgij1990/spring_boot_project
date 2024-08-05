@@ -3,6 +3,8 @@ package project.mass.project.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vaterinarian")
@@ -16,22 +18,15 @@ public class Veterinarian extends Employee {
     @Column(name = "veterinarian_specialization")
     private String veterinarianSpecialization;
 
-    public Veterinarian() {}
+    @ElementCollection
+    @CollectionTable(name = "qualifications", joinColumns = @JoinColumn(name = "veterinarian_id"))
+    @Column(name = "qualification")
+    private List<String> qualifications;
 
-    public Veterinarian(LocalDate birthDate, String email, String firstName, String lastName, String phoneNumber, LocalDate hireDate, String contactType, Double salary, String veterinarianSpecialization) {
-        super(birthDate, email, firstName, lastName, phoneNumber, hireDate, contactType, salary);
-        this.veterinarianSpecialization = veterinarianSpecialization;
-    }
+    @OneToMany(mappedBy = "veterinarian")
+    private List<VeterinarianProcedure> veterinarianProcedures;
 
-    public int getId() {
-        return id;
-    }
-
-    public String getVeterinarianSpecialization() {
-        return veterinarianSpecialization;
-    }
-
-    public void setVeterinarianSpecialization(String veterinarianSpecialization) {
-        this.veterinarianSpecialization = veterinarianSpecialization;
-    }
+    @ManyToOne
+    @JoinColumn(name = "division_id")
+    private Division division;
 }

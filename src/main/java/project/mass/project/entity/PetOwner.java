@@ -23,39 +23,13 @@ public class PetOwner extends Person {
     @OneToMany(mappedBy = "petOwner")
     private List<Visit> visits;
 
-    public PetOwner() {}
+    @ManyToMany
+    @JoinTable(
+            name = "pet_pet_owner",
+            joinColumns = @JoinColumn(name = "pet_owner_id"),
+            inverseJoinColumns = @JoinColumn(name = "pet_id")
+    )
+    private List<Pet> pets;
 
-    public PetOwner(LocalDate birthDate, String email, String firstName, String lastName, String phoneNumber, LocalDate registrationDate, String subscriptionType) {
-        super(birthDate, email, firstName, lastName, phoneNumber);
-        this.registrationDate = registrationDate;
-        this.subscriptionType = subscriptionType;
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public String getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(String subscriptionType) {
-        this.subscriptionType = subscriptionType;
-    }
-
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
-    }
 }

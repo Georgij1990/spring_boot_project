@@ -3,6 +3,7 @@ package project.mass.project.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,22 +20,6 @@ public class CustomerSupport extends Employee {
     @Column(name = "record")
     private List<String> trainingRecords;
 
-    public CustomerSupport() {}
-
-    public CustomerSupport(LocalDate birthDate, String email, String firstName, String lastName, String phoneNumber, LocalDate hireDate, String contactType, Double salary, List<String> trainingRecords) {
-        super(birthDate, email, firstName, lastName, phoneNumber, hireDate, contactType, salary);
-        this.trainingRecords = trainingRecords;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public List<String> getTrainingRecords() {
-        return trainingRecords;
-    }
-
-    public void setTrainingRecords(List<String> trainingRecords) {
-        this.trainingRecords = trainingRecords;
-    }
+    @OneToMany(mappedBy = "customer_suport")
+    private List<Case> cases;
 }
