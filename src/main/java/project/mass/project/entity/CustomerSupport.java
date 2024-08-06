@@ -20,6 +20,6 @@ public class CustomerSupport extends Employee {
     @Column(name = "record")
     private List<String> trainingRecords;
 
-    @OneToMany(mappedBy = "customer_suport")
+    @OneToMany(mappedBy = "customerSupport")
     private List<Case> cases;
 }
