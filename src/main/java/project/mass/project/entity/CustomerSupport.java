@@ -22,4 +22,11 @@ public class CustomerSupport extends Employee {
 
     @OneToMany(mappedBy = "customerSupport")
     private List<Case> cases;
+
+    @ManyToOne
+    @JoinColumn(name = "mentor_id")
+    private CustomerSupport mentor;
+
+    @OneToMany(mappedBy = "mentor")
+    private List<CustomerSupport> mentees = new ArrayList<>();
 }
