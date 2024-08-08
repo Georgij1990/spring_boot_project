@@ -29,4 +29,50 @@ public class CustomerSupport extends Employee {
 
     @OneToMany(mappedBy = "mentor")
     private List<CustomerSupport> mentees = new ArrayList<>();
+
+    public CustomerSupport() {
+    }
+
+    public CustomerSupport(List<String> trainingRecords, List<Case> cases, CustomerSupport mentor, List<CustomerSupport> mentees) {
+        this.trainingRecords = trainingRecords;
+        this.cases = cases;
+        this.mentor = mentor;
+        this.mentees = mentees;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<String> getTrainingRecords() {
+        return trainingRecords;
+    }
+
+    public void setTrainingRecords(List<String> trainingRecords) {
+        this.trainingRecords = trainingRecords;
+    }
+
+    public List<Case> getCases() {
+        return cases;
+    }
+
+    public void setCases(List<Case> cases) {
+        this.cases = cases;
+    }
+
+    public CustomerSupport getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(CustomerSupport mentor) {
+        this.mentor = mentor;
+    }
+
+    public List<CustomerSupport> getMentees() {
+        return mentees;
+    }
+
+    public void setMentees(List<CustomerSupport> mentees) {
+        this.mentees = mentees;
+    }
 }

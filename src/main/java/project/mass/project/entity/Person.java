@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "person")
-public abstract class Person {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,16 @@ public abstract class Person {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    public Person() {}
+    @OneToOne
+    @JoinColumn(name = "pet_owner_id")
+    private PetOwner petOwner;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    public Person() {
+    }
 
     public Person(LocalDate birthDate, String email, String firstName, String lastName, String phoneNumber) {
         this.birthDate = birthDate;
@@ -80,5 +89,21 @@ public abstract class Person {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public PetOwner getPetOwner() {
+        return petOwner;
+    }
+
+    public void setPetOwner(PetOwner petOwner) {
+        this.petOwner = petOwner;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

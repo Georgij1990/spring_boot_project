@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "employee")
-public abstract class Employee extends Person {
+public abstract class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,17 @@ public abstract class Employee extends Person {
     @Column(name = "salary")
     private Double salary;
 
-    public Employee() {}
+    @OneToOne(mappedBy = "employee")
+    private Person person;
 
-    public Employee(LocalDate birthDate, String email, String firstName, String lastName, String phoneNumber, LocalDate hireDate, String contactType, Double salary) {
-        super(birthDate, email, firstName, lastName, phoneNumber);
+    public Employee() {
+    }
+
+    public Employee(LocalDate hireDate, String contactType, Double salary, Person person) {
         this.hireDate = hireDate;
         this.contactType = contactType;
         this.salary = salary;
+        this.person = person;
     }
 
     public int getId() {
@@ -58,5 +62,13 @@ public abstract class Employee extends Person {
 
     public void setSalary(Double salary) {
         this.salary = salary;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
