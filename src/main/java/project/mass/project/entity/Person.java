@@ -99,11 +99,19 @@ public class Person {
         this.petOwner = petOwner;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Veterinarian getVeterinarian() {
+        return (Veterinarian) employee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setVeterinarian(Veterinarian veterinarian) {
+        this.employee = veterinarian;
+    }
+
+    public CustomerSupport getCustomerSupport() {
+        return (CustomerSupport) employee;
+    }
+
+    public void setCustomerSupport(CustomerSupport customerSupport) {
+        this.employee = customerSupport;
     }
 }
