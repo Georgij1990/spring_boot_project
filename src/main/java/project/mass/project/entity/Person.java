@@ -28,11 +28,11 @@ public class Person {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pet_owner_id")
     private PetOwner petOwner;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
@@ -113,5 +113,13 @@ public class Person {
 
     public void setCustomerSupport(CustomerSupport customerSupport) {
         this.employee = customerSupport;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validatePerson() {
+        if (petOwner == null && employee == null) {
+            throw new IllegalStateException("Either PetOwner or Employee must be populated");
+        }
     }
 }

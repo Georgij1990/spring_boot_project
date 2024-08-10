@@ -23,7 +23,7 @@ public abstract class Employee {
     @Column(name = "salary")
     private Double salary;
 
-    @OneToOne(mappedBy = "employee")
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private Person person;
 
     public Employee() {

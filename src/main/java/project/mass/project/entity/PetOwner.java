@@ -23,7 +23,7 @@ public class PetOwner {
     @OneToMany(mappedBy = "petOwner")
     private List<Visit> visits;
 
-    @OneToOne(mappedBy = "petOwner")
+    @OneToOne(mappedBy = "petOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Person person;
 
 
