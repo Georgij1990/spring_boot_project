@@ -18,7 +18,7 @@ public abstract class Employee {
     private LocalDate hireDate;
 
     @Column(name = "contact_type")
-    private String contactType;
+    private String contractType;
 
     @Column(name = "salary")
     private Double salary;
@@ -29,9 +29,9 @@ public abstract class Employee {
     public Employee() {
     }
 
-    public Employee(LocalDate hireDate, String contactType, Double salary, Person person) {
+    public Employee(LocalDate hireDate, String contractType, Double salary, Person person) {
         this.hireDate = hireDate;
-        this.contactType = contactType;
+        this.contractType = contractType;
         this.salary = salary;
         this.person = person;
     }
@@ -48,12 +48,12 @@ public abstract class Employee {
         this.hireDate = hireDate;
     }
 
-    public String getContactType() {
-        return contactType;
+    public String getContractType() {
+        return contractType;
     }
 
-    public void setContactType(String contactType) {
-        this.contactType = contactType;
+    public void setContractType(String contactType) {
+        this.contractType = contactType;
     }
 
     public Double getSalary() {

@@ -23,24 +23,28 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Override
     @Transactional
-    public void createPerson(Person person) {
+    public void savePerson(Person person) {
         this.em.persist(person);
     }
 
     @Override
-    public void createPetOwner(Person person, PetOwner petOwner) {
+    @Transactional
+    public void savePetOwner(Person person, PetOwner petOwner) {
         person.setPetOwner(petOwner);
         this.em.persist(person);
     }
 
     @Override
-    public void createVeterinarian(Person person, Veterinarian veterinarian) {
+    @Transactional
+    public void saveVeterinarian(Person person, Veterinarian veterinarian) {
         person.setVeterinarian(veterinarian);
         this.em.persist(person);
     }
 
     @Override
-    public void createCustomerSupport(Person person, CustomerSupport customerSupport) {
+    @Transactional
+    public void saveCustomerSupport(Person person, CustomerSupport customerSupport) {
+        this.em.persist(customerSupport);
         person.setCustomerSupport(customerSupport);
         this.em.persist(person);
     }

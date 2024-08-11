@@ -10,11 +10,6 @@ import java.util.List;
 @Table(name = "customer_support")
 public class CustomerSupport extends Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
     @ElementCollection
     @CollectionTable(name = "training_records", joinColumns = @JoinColumn(name = "customer_support_id"))
     @Column(name = "record")
@@ -33,15 +28,9 @@ public class CustomerSupport extends Employee {
     public CustomerSupport() {
     }
 
-    public CustomerSupport(List<String> trainingRecords, List<Case> cases, CustomerSupport mentor, List<CustomerSupport> mentees) {
+    public CustomerSupport(LocalDate hireDate, String contractType, Double salary, Person person, List<String> trainingRecords) {
+        super(hireDate, contractType, salary, person);
         this.trainingRecords = trainingRecords;
-        this.cases = cases;
-        this.mentor = mentor;
-        this.mentees = mentees;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public List<String> getTrainingRecords() {

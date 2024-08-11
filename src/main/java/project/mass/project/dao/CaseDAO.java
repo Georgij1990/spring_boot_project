@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CaseDAO {
 
-    void createCase(Case c);
+    void saveCase(Case c);
     Case findCaseById(int id);
     List<Case> findCasesByCustomerSupportId(int id);
     void updateCase(Case caseItem);

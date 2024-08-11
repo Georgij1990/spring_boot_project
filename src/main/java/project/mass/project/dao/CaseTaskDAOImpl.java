@@ -1,15 +1,19 @@
 package project.mass.project.dao;
 
 import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import project.mass.project.entity.Case;
 import project.mass.project.entity.CaseTask;
 
 import java.util.List;
 
+@Repository
 public class CaseTaskDAOImpl implements CaseTaskDAO {
 
     private EntityManager em;
 
+    @Autowired
     public CaseTaskDAOImpl(EntityManager em) {
         this.em = em;
     }

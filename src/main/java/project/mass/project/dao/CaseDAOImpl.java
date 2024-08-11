@@ -2,6 +2,7 @@ package project.mass.project.dao;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import project.mass.project.entity.Case;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class CaseDAOImpl implements CaseDAO {
     }
 
     @Override
-    public void createCase(Case c) {
+    @Transactional
+    public void saveCase(Case c) {
         this.em.persist(c);
     }
 
@@ -33,11 +35,13 @@ public class CaseDAOImpl implements CaseDAO {
     }
 
     @Override
+    @Transactional
     public void updateCase(Case caseItem) {
         this.em.merge(caseItem);
     }
 
     @Override
+    @Transactional
     public void deleteCase(int id) {
         Case c = this.em.find(Case.class, id);
         this.em.remove(c);

@@ -2,16 +2,13 @@ package project.mass.project.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "vaterinarian")
+@Table(name = "veterinarian")
 public class Veterinarian extends Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
 
     @Column(name = "veterinarian_specialization")
     private String veterinarianSpecialization;
@@ -31,15 +28,12 @@ public class Veterinarian extends Employee {
     public Veterinarian() {
     }
 
-    public Veterinarian(String veterinarianSpecialization, List<String> qualifications, List<VeterinarianProcedure> veterinarianProcedures, Division division) {
+    public Veterinarian(LocalDate hireDate, String contractType, Double salary, Person person, String veterinarianSpecialization, Division division) {
+        super(hireDate, contractType, salary, person);
         this.veterinarianSpecialization = veterinarianSpecialization;
-        this.qualifications = qualifications;
-        this.veterinarianProcedures = veterinarianProcedures;
         this.division = division;
-    }
-
-    public int getId() {
-        return id;
+        this.qualifications = new ArrayList<>();
+        this.veterinarianProcedures = new ArrayList<>();
     }
 
     public String getVeterinarianSpecialization() {

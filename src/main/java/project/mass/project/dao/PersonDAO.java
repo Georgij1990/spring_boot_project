@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface PersonDAO {
 
-    void createPerson(Person person);
-    void createPetOwner(Person person, PetOwner petOwner);
-    void createVeterinarian(Person person, Veterinarian veterinarian);
-    void createCustomerSupport(Person person, CustomerSupport customerSupport);
+    void savePerson(Person person);
+    void savePetOwner(Person person, PetOwner petOwner);
+    void saveVeterinarian(Person person, Veterinarian veterinarian);
+    void saveCustomerSupport(Person person, CustomerSupport customerSupport);
 
     Person findPersonById(int id);
     void deletePersonById(int id);
