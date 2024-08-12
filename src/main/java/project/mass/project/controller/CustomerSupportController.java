@@ -49,7 +49,7 @@ public class CustomerSupportController {
     @GetMapping("/showTask")
     public String showCaseTask(@RequestParam("caseTaskId") int theId,  Model model) {
         CaseTask caseTask = this.customerSupportService.findCaseTaskById(theId);
-        model.addAttribute("cTI", caseTask);
+        model.addAttribute("caseTask", caseTask);
         return "customer-support-employees/task-item";
     }
 

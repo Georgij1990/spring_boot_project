@@ -20,7 +20,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="caseTask : ${caseTaskList}" onclick="highlightAndSubmit(this, '${caseTaskItem.id}')">
+        <tr th:each="caseTask : ${caseTaskList}" onclick="highlightAndSubmit(this)">
+            <input type="hidden" class="caseTaskId" th:value="${caseTask.id}">
             <td th:text="${caseTask.name}"></td>
             <td th:text="${caseTask.status}"></td>
             <td th:text="${caseTask.priority}"></td>
@@ -28,7 +29,6 @@
         </tr>
         </tbody>
     </table>
-
 
     <div class="d-flex justify-content-end mt-3">
         <a href="/exit" class="btn btn-secondary me-2">Exit</a>
@@ -38,14 +38,19 @@
 </div>
 
 <script>
-    function highlightAndSubmit(row, caseTaskId) {
+    function highlightAndSubmit(row) {
         const rows = document.querySelectorAll('tbody tr');
         rows.forEach(r => r.classList.remove('table-active'));
 
         row.classList.add('table-active');
+        const caseTaskId = row.querySelector('.caseTaskId').value;
 
         const submitLink = document.getElementById('submitLink');
-        submitLink.href = '/customerSupportEmployees/showTask?caseTaskId=' + encodeURIComponent(caseTaskId);
+        if (caseTaskId) {
+            submitLink.href = '/customerSupportEmployees/showTask?caseTaskId=' + encodeURIComponent(caseTaskId);
+        } else {
+            console.error('No caseTaskId found.');
+        }
     }
 </script>
 </body>

@@ -12,7 +12,7 @@
         <h3>Task</h3>
         <hr>
         <p class="h4 mb-4">Save Task</p>
-        <form th:action="@{/caseTask/save}" th:object="${cTI}" method="POST">
+        <form th:action="@{/caseTask/save}" th:object="${caseTask}" method="POST">
             <input type="hidden" th:field="*{id}">
             <input type="text" th:field="*{name}" class="form-control mb-4 w-25" placeholder="Name">
             <input type="text" th:field="*{status}" class="form-control mb-4 w-25" placeholder="Status">
