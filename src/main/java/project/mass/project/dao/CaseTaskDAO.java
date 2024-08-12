@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CaseTaskDAO {
 
-    void createCaseTask(CaseTask caseTask, Case caseItem);
+    void saveCaseTask(CaseTask caseTask);
     CaseTask findCaseTaskById(int id);
     List<CaseTask> findCaseTasksByCaseId(int id);
     void updateCaseTask(CaseTask caseTask);

@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import project.mass.project.dao.CaseDAO;
 import project.mass.project.dao.CaseTaskDAO;
 import project.mass.project.dao.PersonDAO;
-import project.mass.project.entity.Case;
-import project.mass.project.entity.CaseStatus;
-import project.mass.project.entity.CustomerSupport;
-import project.mass.project.entity.Person;
+import project.mass.project.entity.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -85,8 +82,40 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     }
 
     @Override
-    public void createCaseTaskItems() {
+    public List<Case> findAllCaseItems() {
+        return this.caseDAO.findAllCaseItems();
+    }
 
+    @Override
+    public void createCaseTaskItems() {
+        List<Case> caseItemList = this.findAllCaseItems();
+        for (Case caseItem : caseItemList) {
+            for (int i = 1; i <= 10; i++) {
+                CaseTask caseTask = new CaseTask(
+                        "Task " + i,
+                        Status.NOT_STARTED,
+                        Priority.NORMAL,
+                        "",
+                        caseItem
+                );
+                this.caseTaskDAO.saveCaseTask(caseTask);
+            }
+        }
+    }
+
+    @Override
+    public void saveCaseTask(CaseTask caseTask) {
+        this.caseTaskDAO.saveCaseTask(caseTask);
+    }
+
+    @Override
+    public CaseTask findCaseTaskById(int caseTaskId) {
+        return this.caseTaskDAO.findCaseTaskById(caseTaskId);
+    }
+
+    @Override
+    public List<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId) {
+        return this.caseTaskDAO.findCaseTasksByCaseId(customerSupportId);
     }
 
     private static List<String> generateTrainingRecords(int i) {

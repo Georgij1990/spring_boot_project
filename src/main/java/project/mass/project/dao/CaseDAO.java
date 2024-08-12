@@ -9,6 +9,7 @@ public interface CaseDAO {
     void saveCase(Case c);
     Case findCaseById(int id);
     List<Case> findCasesByCustomerSupportId(int id);
+    List<Case> findAllCaseItems();
     void updateCase(Case caseItem);
     void deleteCase(int id);
 

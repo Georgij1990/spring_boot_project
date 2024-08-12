@@ -35,6 +35,11 @@ public class CaseDAOImpl implements CaseDAO {
     }
 
     @Override
+    public List<Case> findAllCaseItems() {
+        return this.em.createQuery("SELECT c FROM Case c", Case.class).getResultList();
+    }
+
+    @Override
     @Transactional
     public void updateCase(Case caseItem) {
         this.em.merge(caseItem);

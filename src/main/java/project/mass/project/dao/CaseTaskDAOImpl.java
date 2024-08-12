@@ -3,6 +3,7 @@ package project.mass.project.dao;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import project.mass.project.entity.Case;
 import project.mass.project.entity.CaseTask;
 
@@ -19,8 +20,8 @@ public class CaseTaskDAOImpl implements CaseTaskDAO {
     }
 
     @Override
-    public void createCaseTask(CaseTask caseTask, Case caseItem) {
-        caseTask.setCaseItem(caseItem);
+    @Transactional
+    public void saveCaseTask(CaseTask caseTask) {
         this.em.persist(caseTask);
     }
 
@@ -37,11 +38,13 @@ public class CaseTaskDAOImpl implements CaseTaskDAO {
     }
 
     @Override
+    @Transactional
     public void updateCaseTask(CaseTask caseTask) {
         this.em.merge(caseTask);
     }
 
     @Override
+    @Transactional
     public void deleteCaseTask(int id) {
         CaseTask ct = findCaseTaskById(id);
         this.em.remove(ct);
