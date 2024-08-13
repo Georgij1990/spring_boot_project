@@ -58,6 +58,11 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     }
 
     @Override
+    public CustomerSupport findCustomerSupportEmployeeById(int id) {
+        return this.personDAO.findCustomerSupportById(id);
+    }
+
+    @Override
     public void createCaseItems() {
         List<CustomerSupport> customerSupports = this.findAllCustomerSupportEmployees();
         for (CustomerSupport customerSupport : customerSupports) {

@@ -22,6 +22,13 @@ public class CustomerSupportController {
         this.customerSupportService = customerSupportService;
     }
 
+    @GetMapping("/home_page")
+    public String showHomePage(@RequestParam("employeeId") int theId, Model model) {
+        CustomerSupport customerSupportEmployee = this.customerSupportService.findCustomerSupportEmployeeById(theId);
+        model.addAttribute("customerSupportEmployee", customerSupportEmployee);
+        return "customer-support-employees/home-page";
+    }
+
     @GetMapping("/list")
     public String listCustomerSupportEmployees(Model model) {
 //        customerSupportService.createCustomerSupportEmployees();
@@ -52,6 +59,13 @@ public class CustomerSupportController {
         model.addAttribute("caseTask", caseTask);
         return "customer-support-employees/task-item";
     }
+
+//    @GetMapping("/showTask")
+//    public String updateNextTask(@RequestParam("caseTaskId") int theId,  Model model) {
+//        CaseTask caseTask = this.customerSupportService.findCaseTaskById(theId);
+//        model.addAttribute("caseTask", caseTask);
+//        return "customer-support-employees/task-item";
+//    }
 
     @PostMapping("/caseTask/save")
     public String saveCaseTask(@ModelAttribute("caseTaskItem") CaseTask caseTask) {

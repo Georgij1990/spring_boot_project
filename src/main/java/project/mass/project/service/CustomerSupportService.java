@@ -10,6 +10,7 @@ public interface CustomerSupportService {
 
     void createCustomerSupportEmployees();
     List<CustomerSupport> findAllCustomerSupportEmployees();
+    CustomerSupport findCustomerSupportEmployeeById(int id);
     void createCaseItems();
     List<Case> findAllCasesByCustomerSupportId(int customerSupportId);
     List<Case> findAllCaseItems();
