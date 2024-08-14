@@ -20,26 +20,38 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="caseItem : ${caseItemList}">
-            <td>
-                <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id})}"
-                   th:text="${caseItem.subject}"></a>
-            </td>
-            <td>
-                <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id})}"
-                   th:text="${caseItem.status}"></a>
-            </td>
-            <td>
-                <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id})}"
-                   th:text="${caseItem.openingDate}"></a>
-            </td>
-            <td>
-                <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id})}"
-                   th:text="${caseItem.closingDate}"></a>
-            </td>
+        <tr th:each="caseItem : ${caseItemList}" onclick="highlightAndSubmit(this)">
+            <input type="hidden" class="caseItemId" th:value="${caseItem.id}">
+            <td th:text="${caseItem.subject}"></td>
+            <td th:text="${caseItem.status}"></td>
+            <td th:text="${caseItem.openingDate}"></td>
+            <td th:text="${caseItem.closingDate}"></td>
         </tr>
         </tbody>
     </table>
+
+    <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Back</button>
+        <a id="submitLink" href="#" class="btn btn-primary">Select</a>
+    </div>
 </div>
+
+<script>
+    function highlightAndSubmit(row) {
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(r => r.classList.remove('table-active'));
+
+        row.classList.add('table-active');
+
+        const caseItemId = row.querySelector('.caseItemId').value;
+
+        const submitLink = document.getElementById('submitLink');
+        if (caseItemId) {
+            submitLink.href = '/customerSupportEmployees/caseTasks?caseItemId=' + encodeURIComponent(caseItemId);
+        } else {
+            console.error('No caseItemId found.');
+        }
+    }
+</script>
 </body>
 </html>
