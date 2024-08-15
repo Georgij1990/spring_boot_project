@@ -60,16 +60,17 @@ public class CustomerSupportController {
         return "customer-support-employees/task-item";
     }
 
-//    @GetMapping("/showTask")
-//    public String updateNextTask(@RequestParam("caseTaskId") int theId,  Model model) {
-//        CaseTask caseTask = this.customerSupportService.findCaseTaskById(theId);
-//        model.addAttribute("caseTask", caseTask);
-//        return "customer-support-employees/task-item";
-//    }
-
     @PostMapping("/caseTask/save")
-    public String saveCaseTask(@ModelAttribute("caseTaskItem") CaseTask caseTask) {
-        this.customerSupportService.saveCaseTask(caseTask);
-        return "customer-support-employees/list-task-items";
+    public String updateTask(@ModelAttribute("caseTask") CaseTask caseTaskItem, @RequestParam("caseItemId") int id, @RequestParam("caseTaskId") int caseTaskId,  Model model) {
+        Case caseItem = this.customerSupportService.findCaseItemByID(id);
+        CaseTask caseTask = this.customerSupportService.findCaseTaskById(caseTaskId);
+        caseTask.setCaseItem(caseItem);
+        caseTask.setName(caseTaskItem.getName());
+        caseTask.setStatus(caseTaskItem.getStatus());
+        caseTask.setPriority(caseTaskItem.getPriority());
+        caseTask.setEditedStatusReason(caseTaskItem.getEditedStatusReason());
+        this.customerSupportService.updateCaseTask(caseTaskItem, id);
+        model.addAttribute("caseTask", caseTask);
+        return "customer-support-employees/next-case-task";
     }
 }

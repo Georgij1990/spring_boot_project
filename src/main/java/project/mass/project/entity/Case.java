@@ -27,7 +27,7 @@ public class Case {
     @Column(name = "closing_date")
     private LocalDate closingDate;
 
-    @OneToMany(mappedBy = "caseItem")
+    @OneToMany(mappedBy = "caseItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CaseTask> caseTasks;
 
     @ManyToOne

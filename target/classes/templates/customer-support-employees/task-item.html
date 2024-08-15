@@ -7,24 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-    <style>
-        .bottom-right-buttons {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-        }
-    </style>
-
-    <script>
-        function navigateWithCaseItemId(event) {
-            event.preventDefault();
-            let caseItemId = document.getElementById("caseItemId").value;
-            window.location.href = "/customerSupportEmployees/caseTasks?caseItemId=" + caseItemId;
-        }
-    </script>
 </head>
 <body>
 <div class="container">
@@ -34,7 +16,7 @@
 
     <div class="card frame-container">
         <div class="card-body">
-            <form id="taskForm" th:action="@{/caseTask/save}" th:object="${caseTask}" method="POST">
+            <form id="taskForm" th:action="@{/customerSupportEmployees/caseTask/save(caseItemId=${caseTask.caseItem.id}, caseTaskId=${caseTask.id})}"  th:object="${caseTask}" method="POST">
                 <input type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{caseItem.id}" id="caseItemId">
                 <input type="hidden" id="customerSupportId" th:value="${caseTask.caseItem.customerSupport.id}">
@@ -47,14 +29,21 @@
 
                 <div class="mb-4">
                     <label for="status" class="me-2">Status</label>
-                    <input type="text" th:field="*{status}" class="form-control w-25 d-inline" placeholder="Status"
-                           id="status">
+                    <select th:field="*{status}" class="form-control w-25 d-inline" id="status">
+                        <option th:value="NOT_STARTED">Not Started</option>
+                        <option th:value="IN_PROGRESS">In Progress</option>
+                        <option th:value="COMPLETED">Completed</option>
+                        <option th:value="CANCELED">Canceled</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
                     <label for="priority" class="me-2">Priority</label>
-                    <input type="text" th:field="*{priority}" class="form-control w-25 d-inline"
-                           placeholder="Priority" id="priority">
+                    <select th:field="*{priority}" class="form-control w-25 d-inline" id="priority">
+                        <option th:value="NORMAL">Normal</option>
+                        <option th:value="HIGH">High</option>
+                        <option th:value="CRITICAL">Critical</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
@@ -62,14 +51,11 @@
                     <input type="text" th:field="*{editedStatusReason}" class="form-control w-25 d-inline"
                            placeholder="Edited Status Reason" id="editedStatusReason">
                 </div>
+                <button type="button" class="btn btn-secondary me-2" onclick="exitToHomePage()">Exit</button>
+                <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Back</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
-    </div>
-
-    <div class="bottom-right-buttons">
-        <button type="button" class="btn btn-secondary me-2" onclick="exitToHomePage()">Exit</button>
-        <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Back</button>
-        <a href="#" class="btn btn-primary">Submit</a>
     </div>
 </div>
 <script>

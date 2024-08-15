@@ -92,6 +92,11 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     }
 
     @Override
+    public Case findCaseItemByID(int caseItemId) {
+        return this.caseDAO.findCaseById(caseItemId);
+    }
+
+    @Override
     public void createCaseTaskItems() {
         List<Case> caseItemList = this.findAllCaseItems();
         for (Case caseItem : caseItemList) {
@@ -111,6 +116,16 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     @Override
     public void saveCaseTask(CaseTask caseTask) {
         this.caseTaskDAO.saveCaseTask(caseTask);
+    }
+
+    @Override
+    public void updateCaseTask(CaseTask caseTask, int id) {
+        Case existingCaseItem = caseDAO.findCaseById(id);
+        if (existingCaseItem == null) {
+            throw new IllegalArgumentException("CaseItem with ID " + caseTask.getCaseItem().getId() + " does not exist.");
+        }
+        caseTask.setCaseItem(existingCaseItem);
+        caseTaskDAO.updateCaseTask(caseTask);
     }
 
     @Override

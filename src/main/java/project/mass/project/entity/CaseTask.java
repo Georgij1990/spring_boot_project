@@ -25,7 +25,7 @@ public class CaseTask {
     @Column(name = "edited_status_reason")
     private String editedStatusReason;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "case_id")
     private Case caseItem;
 
@@ -90,5 +90,17 @@ public class CaseTask {
         if (caseItem == null) {
             throw new IllegalStateException("CaseItem cannot be null");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CaseTask{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", editedStatusReason='" + editedStatusReason + '\'' +
+                ", caseItem=" + caseItem +
+                '}';
     }
 }

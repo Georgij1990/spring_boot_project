@@ -14,8 +14,10 @@ public interface CustomerSupportService {
     void createCaseItems();
     List<Case> findAllCasesByCustomerSupportId(int customerSupportId);
     List<Case> findAllCaseItems();
+    Case findCaseItemByID(int caseItemId);
     void createCaseTaskItems();
     void saveCaseTask(CaseTask caseTask);
+    void updateCaseTask(CaseTask caseTask, int id);
     CaseTask findCaseTaskById(int caseTaskId);
     List<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId);
 }
