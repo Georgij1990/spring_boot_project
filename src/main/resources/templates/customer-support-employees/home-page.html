@@ -3,130 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .container {
-            width: 70%;
-            height: 80vh;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            padding: 20px;
-            box-sizing: border-box;
-            position: relative;
-            display: flex;
-        }
-        .profile-frame {
-            width: 50%;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            box-sizing: border-box;
-        }
-        .profile-photo {
-            width: 300px;
-            height: 200px;
-            object-fit: cover;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            display: block;
-            margin-bottom: 20px;
-        }
-        .profile-info p {
-            margin: 5px 0;
-        }
-        .profile-container {
-            display: flex;
-            flex-direction: column;
-            width: 50%;
-        }
-        .buttons-container {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .buttons a, .links a {
-            text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            padding: 15px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        .buttons a:hover, .links a:hover {
-            background-color: #0056b3;
-        }
-        .links {
-            display: flex;
-            flex-direction: column;
-            width: 200px;
-        }
-        .links a {
-            background-color: #28a745;
-            margin-bottom: 10px;
-            padding: 15px;
-            font-size: 14px;
-            text-align: center;
-        }
-        .links a:last-child {
-            margin-bottom: 0;
-        }
-    </style>
-
-    <script>
-        function navigateWithCaseItemId(event) {
-            event.preventDefault();
-            let caseItemId = document.getElementById("caseItemId").value;
-            window.location.href = "/customerSupportEmployees/caseItems?employeeId=" + caseItemId;
-        }
-    </script>
+    <link rel="stylesheet" href="/home-page-styling.css">
 </head>
 <body>
 <div class="container">
-    <div class="profile-frame">
-        <img src="/profile_photo.jpg" alt="Profile Photo" class="profile-photo">
-        <div class="profile-info">
-            <input type="hidden" th:field="${customerSupportEmployee.id}" id="caseItemId">
-            <p><strong>First Name:</strong> <span th:text="${customerSupportEmployee.getPerson().firstName}">First Name</span></p>
-            <p><strong>Last Name:</strong> <span th:text="${customerSupportEmployee.getPerson().lastName}">Last Name</span></p>
-            <p><strong>Email:</strong> <span th:text="${customerSupportEmployee.getPerson().email}">Email</span></p>
-            <p><strong>Phone Number:</strong> <span th:text="${customerSupportEmployee.getPerson().phoneNumber}">Phone Number</span></p>
-            <p><strong>Hire Date:</strong> <span th:text="${customerSupportEmployee.hireDate}">Hire Date</span></p>
-            <p><strong>Contract Type:</strong> <span th:text="${customerSupportEmployee.contractType}">Contract Type</span></p>
+    <div class="left-frame">
+        <div class="profile-frame">
+            <div class="profile-content">
+                <img src="/profile_photo.jpg" alt="Profile Photo" class="profile-photo">
+                <div class="profile-info">
+                    <input type="hidden" th:field="${customerSupportEmployee.id}" id="caseItemId">
+                    <p><strong>First Name:</strong> <span th:text="${customerSupportEmployee.getPerson().firstName}">First Name</span></p>
+                    <p><strong>Last Name:</strong> <span th:text="${customerSupportEmployee.getPerson().lastName}">Last Name</span></p>
+                    <p><strong>Email:</strong> <span th:text="${customerSupportEmployee.getPerson().email}">Email</span></p>
+                    <p><strong>Phone Number:</strong> <span th:text="${customerSupportEmployee.getPerson().phoneNumber}">Phone Number</span></p>
+                    <p><strong>Hire Date:</strong> <span th:text="${customerSupportEmployee.hireDate}">Hire Date</span></p>
+                    <p><strong>Contract Type:</strong> <span th:text="${customerSupportEmployee.contractType}">Contract Type</span></p>
+                </div>
+            </div>
+            <div class="buttons-container">
+                <a href="#">Create Case</a>
+                <a href="#">Create Task</a>
+                <a href="#">Send Email</a>
+                <a href="#">List Case</a>
+                <a href="#">Edit Case</a>
+                <a href="#" onclick="navigateWithCaseItemId(event)">Edit Task</a>
+            </div>
         </div>
     </div>
-    <div class="buttons-container">
-        <div class="buttons">
-            <a href="#">Create Case</a>
-            <a href="#">Create Task</a>
-            <a href="#">Send Email</a>
-        </div>
-        <div class="links">
-            <a href="#">List Case</a>
-            <a href="#">Edit Case</a>
-            <a href="#" onclick="navigateWithCaseItemId(event)">Edit Task</a>
-        </div>
+    <div class="right-frame">
+        <div class="clinic-title">Veterinarian Clinic</div>
+        <img src="/illustration-of-a-logo-of-a-veterinary-clinic-vector.jpg" alt="Logo" class="logo">
     </div>
+    <a href="#" class="exit-button">Exit</a>
 </div>
+<script>
+    function navigateWithCaseItemId(event) {
+        event.preventDefault();
+        let caseItemId = document.getElementById("caseItemId").value;
+        window.location.href = "/customerSupportEmployees/caseItems?employeeId=" + caseItemId;
+    }
+</script>
 </body>
 </html>

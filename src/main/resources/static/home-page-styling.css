@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f6f9;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh;
+    display: flex;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.left-frame {
+    width: 60%;
+    display: flex;
+    gap: 20px;
+}
+
+.profile-frame {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9faff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.profile-content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-photo {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #d1d9e6;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #4a4a4a;
+}
+
+.profile-info strong {
+    color: #004b49;
+}
+
+.buttons-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    margin-top: 20px;
+}
+
+.buttons-container a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #0056a0;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    max-width: 220px;
+    box-sizing: border-box;
+}
+
+.buttons-container a:hover {
+    background-color: #003d75;
+    border-color: #003052;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.right-frame {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.logo {
+    max-width: 300px;
+    height: auto;
+    border: 2px solid #d1d9e6;
+    border-radius: 8px;
+}
+
+.clinic-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #004b49;
+    margin-bottom: 20px;
+}
+
+.exit-button {
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #e03a3e;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.exit-button:hover {
+    background-color: #c62828;
+    border-color: #b71c1c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
