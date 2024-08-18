@@ -28,7 +28,7 @@ public class Veterinarian extends Employee {
     public Veterinarian() {
     }
 
-    public Veterinarian(LocalDate hireDate, String contractType, Double salary, Person person, String veterinarianSpecialization, Division division) {
+    public Veterinarian(LocalDate hireDate, ContractType contractType, Double salary, Person person, String veterinarianSpecialization, Division division) {
         super(hireDate, contractType, salary, person);
         this.veterinarianSpecialization = veterinarianSpecialization;
         this.division = division;

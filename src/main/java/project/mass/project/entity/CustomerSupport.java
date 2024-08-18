@@ -28,7 +28,7 @@ public class CustomerSupport extends Employee {
     public CustomerSupport() {
     }
 
-    public CustomerSupport(LocalDate hireDate, String contractType, Double salary, Person person, List<String> trainingRecords) {
+    public CustomerSupport(LocalDate hireDate, ContractType contractType, Double salary, Person person, List<String> trainingRecords) {
         super(hireDate, contractType, salary, person);
         this.trainingRecords = trainingRecords;
     }

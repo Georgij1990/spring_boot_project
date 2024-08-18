@@ -1,5 +1,6 @@
 package project.mass.project.service;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.mass.project.dao.CaseDAO;
@@ -29,27 +30,26 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
 
     @Override
     public void createCustomerSupportEmployees() {
-        for (int i = 1; i <= 20; i++) {
-            Person person = new Person(
-                    LocalDate.of(1980 + i, i % 12 + 1, i % 28 + 1),
-                    "person" + i + "@example.com",
-                    "FirstName" + i,
-                    "LastName" + i,
-                    "123-456-789" + i
-            );
+        Person person = new Person(
+                LocalDate.of(1980, 3, 17),
+                "marcin.nowak@gmail.com",
+                "Marcin",
+                "Nowak",
+                "123-456-789"
+        );
 
-            CustomerSupport customerSupport = new CustomerSupport(
-                    LocalDate.now().minusYears(5 + i % 10),
-                    "ContractType" + i,
-                    30000.0 + i * 1000,
-                    person,
-                    generateTrainingRecords(i)
-            );
+        CustomerSupport customerSupport = new CustomerSupport(
+                LocalDate.now().minusYears(5),
+                ContractType.PERMANENT_CONTRACT,
+                30000.0,
+                person,
+                generateTrainingRecords(2)
+        );
 
-            person.setCustomerSupport(customerSupport);
+        person.setCustomerSupport(customerSupport);
 
-            this.personDAO.savePerson(person);
-        }
+        this.personDAO.savePerson(person);
+
     }
 
     @Override
@@ -142,5 +142,15 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
         return IntStream.range(0, i % 5 + 1)
                 .mapToObj(j -> "TrainingRecord" + j)
                 .collect(Collectors.toList());
+    }
+
+    @PostConstruct
+    public void init() {
+        List<CustomerSupport> customerSupport = this.personDAO.findAllCustomerSupports();
+        if (customerSupport.isEmpty()) {
+            createCustomerSupportEmployees();
+            createCaseItems();
+            createCaseTaskItems();
+        }
     }
 }

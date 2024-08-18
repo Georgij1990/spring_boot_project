@@ -31,9 +31,6 @@ public class CustomerSupportController {
 
     @GetMapping("/list")
     public String listCustomerSupportEmployees(Model model) {
-//        customerSupportService.createCustomerSupportEmployees();
-//        this.customerSupportService.createCaseItems();
-//        this.customerSupportService.createCaseTaskItems();
         List<CustomerSupport> customerSupportList = customerSupportService.findAllCustomerSupportEmployees();
         model.addAttribute("customerSupportList", customerSupportList);
         return "customer-support-employees/list-employees";
@@ -48,7 +45,9 @@ public class CustomerSupportController {
 
     @GetMapping("/caseTasks")
     public String listCaseTasks(@RequestParam("caseItemId") int theId,  Model model) {
+        Case caseItem = this.customerSupportService.findCaseItemByID(theId);
         List<CaseTask> caseTaskList = this.customerSupportService.findAllCaseTasksByCustomerSupportId(theId);
+        model.addAttribute("caseItem", caseItem);
         model.addAttribute("caseTaskList", caseTaskList);
         return "customer-support-employees/list-task-items";
     }

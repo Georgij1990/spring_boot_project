@@ -17,8 +17,9 @@ public class PetOwner {
     @Column(name = "registration_date")
     private LocalDate registrationDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "subscription_type")
-    private String subscriptionType;
+    private SubscriptionType subscriptionType;
 
     @OneToMany(mappedBy = "petOwner")
     private List<Visit> visits;
@@ -38,7 +39,7 @@ public class PetOwner {
     public PetOwner() {
     }
 
-    public PetOwner(LocalDate registrationDate, String subscriptionType, List<Visit> visits, Person person, List<Pet> pets) {
+    public PetOwner(LocalDate registrationDate, SubscriptionType subscriptionType, List<Visit> visits, Person person, List<Pet> pets) {
         this.registrationDate = registrationDate;
         this.subscriptionType = subscriptionType;
         this.visits = visits;
@@ -58,11 +59,11 @@ public class PetOwner {
         this.registrationDate = registrationDate;
     }
 
-    public String getSubscriptionType() {
+    public SubscriptionType getSubscriptionType() {
         return subscriptionType;
     }
 
-    public void setSubscriptionType(String subscriptionType) {
+    public void setSubscriptionType(SubscriptionType subscriptionType) {
         this.subscriptionType = subscriptionType;
     }
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+import static jakarta.persistence.EnumType.*;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "employee")
@@ -17,8 +19,9 @@ public abstract class Employee {
     @Column(name = "hire_date")
     private LocalDate hireDate;
 
-    @Column(name = "contact_type")
-    private String contractType;
+    @Enumerated(STRING)
+    @Column(name = "contract_type")
+    private ContractType contractType;
 
     @Column(name = "salary")
     private Double salary;
@@ -29,7 +32,7 @@ public abstract class Employee {
     public Employee() {
     }
 
-    public Employee(LocalDate hireDate, String contractType, Double salary, Person person) {
+    public Employee(LocalDate hireDate, ContractType contractType, Double salary, Person person) {
         this.hireDate = hireDate;
         this.contractType = contractType;
         this.salary = salary;
@@ -48,11 +51,11 @@ public abstract class Employee {
         this.hireDate = hireDate;
     }
 
-    public String getContractType() {
+    public ContractType getContractType() {
         return contractType;
     }
 
-    public void setContractType(String contactType) {
+    public void setContractType(ContractType contactType) {
         this.contractType = contactType;
     }
 
