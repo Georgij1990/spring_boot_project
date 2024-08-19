@@ -12,7 +12,7 @@ body {
 .container {
     width: 90%;
     max-width: 1200px;
-    height: 90vh;
+    height: 95vh;
     display: flex;
     border-radius: 8px;
     background-color: #ffffff;
@@ -83,6 +83,11 @@ body {
 }
 
 .profile-info {
+    margin-bottom: 20px;
+}
+
+.case-items-table {
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -188,4 +193,10 @@ body {
     background-color: #c62828;
     border-color: #b71c1c;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+hr {
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 1px solid #d1d9e6;
 }

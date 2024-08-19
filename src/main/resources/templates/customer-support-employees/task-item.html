@@ -7,14 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/home-page-styling.css">
 </head>
 <body>
 <div class="container">
-    <h3>Task</h3>
-    <hr>
-    <p class="h4 mb-4">Update Task</p>
 
-    <div class="card frame-container">
+    <div class="case-items-table">
+        <h4 class="title">Task</h4>
+        <hr>
+        <p  class="title">Update Task</p>
         <div class="card-body">
             <form id="taskForm" th:action="@{/customerSupportEmployees/caseTask/save(caseItemId=${caseTask.caseItem.id}, caseTaskId=${caseTask.id})}"  th:object="${caseTask}" method="POST">
                 <input type="hidden" th:field="*{id}">
@@ -22,13 +23,13 @@
                 <input type="hidden" id="customerSupportId" th:value="${caseTask.caseItem.customerSupport.id}">
 
                 <div class="mb-4">
-                    <label for="name" class="me-2">Name</label>
+                    <label for="name" class="title">Name</label>
                     <input type="text" th:field="*{name}" class="form-control w-25 d-inline" placeholder="Name"
                            id="name">
                 </div>
 
                 <div class="mb-4">
-                    <label for="status" class="me-2">Status</label>
+                    <label for="status" class="title">Status</label>
                     <select th:field="*{status}" class="form-control w-25 d-inline" id="status">
                         <option th:value="NOT_STARTED">Not Started</option>
                         <option th:value="IN_PROGRESS">In Progress</option>
@@ -38,7 +39,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="priority" class="me-2">Priority</label>
+                    <label for="priority" class="title">Priority</label>
                     <select th:field="*{priority}" class="form-control w-25 d-inline" id="priority">
                         <option th:value="NORMAL">Normal</option>
                         <option th:value="HIGH">High</option>
@@ -47,7 +48,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="editedStatusReason" class="me-2">Edited Status Reason</label>
+                    <label for="editedStatusReason" class="title">Edited Status Reason</label>
                     <input type="text" th:field="*{editedStatusReason}" class="form-control w-25 d-inline"
                            placeholder="Edited Status Reason" id="editedStatusReason">
                 </div>
