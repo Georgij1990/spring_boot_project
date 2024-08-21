@@ -200,3 +200,7 @@ hr {
     margin-bottom: 0;
     border: 1px solid #d1d9e6;
 }
+
+error {
+    color: #b71c1c;
+}

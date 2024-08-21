@@ -1,8 +1,10 @@
 package project.mass.project.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import project.mass.project.entity.Case;
 import project.mass.project.entity.CaseTask;
@@ -60,16 +62,27 @@ public class CustomerSupportController {
     }
 
     @PostMapping("/caseTask/save")
-    public String updateTask(@ModelAttribute("caseTask") CaseTask caseTaskItem, @RequestParam("caseItemId") int id, @RequestParam("caseTaskId") int caseTaskId,  Model model) {
-        Case caseItem = this.customerSupportService.findCaseItemByID(id);
-        CaseTask caseTask = this.customerSupportService.findCaseTaskById(caseTaskId);
-        caseTask.setCaseItem(caseItem);
-        caseTask.setName(caseTaskItem.getName());
-        caseTask.setStatus(caseTaskItem.getStatus());
-        caseTask.setPriority(caseTaskItem.getPriority());
-        caseTask.setEditedStatusReason(caseTaskItem.getEditedStatusReason());
-        this.customerSupportService.updateCaseTask(caseTaskItem, id);
-        model.addAttribute("caseTask", caseTask);
-        return "customer-support-employees/next-case-task";
+    public String updateTask(
+            @Valid @ModelAttribute("caseTask") CaseTask caseTaskItem,
+            BindingResult bindingResult,
+            @RequestParam("caseItemId") int id,
+            @RequestParam("caseTaskId") int caseTaskId,
+            Model model
+            ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("caseTask", caseTaskItem);
+            return "customer-support-employees/task-item";
+        } else {
+            Case caseItem2 = this.customerSupportService.findCaseItemByID(id);
+            CaseTask caseTask = this.customerSupportService.findCaseTaskById(caseTaskId);
+            caseTask.setCaseItem(caseItem2);
+            caseTask.setName(caseTaskItem.getName());
+            caseTask.setStatus(caseTaskItem.getStatus());
+            caseTask.setPriority(caseTaskItem.getPriority());
+            caseTask.setEditedStatusReason(caseTaskItem.getEditedStatusReason());
+            this.customerSupportService.updateCaseTask(caseTaskItem, id);
+            model.addAttribute("caseTask", caseTask);
+            return "customer-support-employees/next-case-task";
+        }
     }
 }

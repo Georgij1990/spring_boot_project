@@ -1,6 +1,7 @@
 package project.mass.project.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import project.mass.project.entity.Case;
@@ -41,7 +42,7 @@ public class CaseDAOImpl implements CaseDAO {
 
     @Override
     @Transactional
-    public void updateCase(Case caseItem) {
+    public void updateCase(@Valid Case caseItem) {
         this.em.merge(caseItem);
     }
 

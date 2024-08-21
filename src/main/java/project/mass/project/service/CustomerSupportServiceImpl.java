@@ -151,6 +151,12 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
             createCustomerSupportEmployees();
             createCaseItems();
             createCaseTaskItems();
+        } else {
+            List<Case> caseList = this.caseDAO.findCasesByCustomerSupportId(customerSupport.get(0).getId());
+            if (caseList.isEmpty()) {
+                createCaseItems();
+                createCaseTaskItems();
+            }
         }
     }
 }

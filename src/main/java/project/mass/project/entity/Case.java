@@ -1,8 +1,11 @@
 package project.mass.project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,20 +18,24 @@ public class Case {
     private int id;
 
     @Column(name = "subject")
+    @NotNull(message = "is required")
+    @NotEmpty(message = "cannot be empty")
     private String subject;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @NotNull(message = "is required")
     private CaseStatus status;
 
     @Column(name = "opening_date")
+    @NotNull(message = "is required")
     private LocalDate openingDate;
 
     @Column(name = "closing_date")
     private LocalDate closingDate;
 
     @OneToMany(mappedBy = "caseItem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CaseTask> caseTasks;
+    private List<CaseTask> caseTasks = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "customer_support_id")
@@ -44,14 +51,22 @@ public class Case {
 
     public Case() {}
 
+    public Case(String subject, CaseStatus status, LocalDate openingDate) {
+        this.subject = subject;
+        this.status = status;
+        this.openingDate = openingDate;
+        this.caseTasks = new ArrayList<>();
+        this.emailMessages = new ArrayList<>();
+    }
+
     public Case(String subject, CaseStatus status, LocalDate openingDate, LocalDate closingDate, List<CaseTask> caseTasks, CustomerSupport customerSupport, List<EmailMessage> emailMessages) {
         this.subject = subject;
         this.status = status;
         this.openingDate = openingDate;
         this.closingDate = closingDate;
-        this.caseTasks = caseTasks;
+        this.caseTasks = caseTasks != null ? caseTasks : new ArrayList<>();
         this.customerSupport = customerSupport;
-        this.emailMessages = emailMessages;
+        this.emailMessages = emailMessages != null ? emailMessages : new ArrayList<>();
     }
 
     public int getId() {

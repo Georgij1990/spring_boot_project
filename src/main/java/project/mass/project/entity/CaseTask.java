@@ -1,6 +1,8 @@
 package project.mass.project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "case_task")
@@ -12,14 +14,18 @@ public class CaseTask {
     private int id;
 
     @Column(name = "name")
+    @NotNull(message = "is required")
+    @NotEmpty(message = "cannot be empty")
     private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @NotNull(message = "is required")
     private Status status;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
+    @NotNull(message = "is required")
     private Priority priority;
 
     @Column(name = "edited_status_reason")
