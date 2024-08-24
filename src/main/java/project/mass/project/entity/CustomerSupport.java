@@ -1,10 +1,13 @@
 package project.mass.project.entity;
 
 import jakarta.persistence.*;
+import project.mass.project.Utility;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customer_support")
@@ -22,15 +25,13 @@ public class CustomerSupport extends Employee {
     @JoinColumn(name = "mentor_id")
     private CustomerSupport mentor;
 
-    @OneToMany(mappedBy = "mentor")
-    private List<CustomerSupport> mentees = new ArrayList<>();
-
     public CustomerSupport() {
     }
 
     public CustomerSupport(LocalDate hireDate, ContractType contractType, Double salary, Person person, List<String> trainingRecords) {
         super(hireDate, contractType, salary, person);
-        this.trainingRecords = trainingRecords;
+        setTrainingRecords(trainingRecords);
+        setMentor(null);
     }
 
     public List<String> getTrainingRecords() {
@@ -38,7 +39,16 @@ public class CustomerSupport extends Employee {
     }
 
     public void setTrainingRecords(List<String> trainingRecords) {
-        this.trainingRecords = trainingRecords;
+        if (trainingRecords == null) {
+            this.trainingRecords = new ArrayList<>();
+        } else {
+            if (Utility.hasNotNull(Collections.singletonList(trainingRecords))) {
+                trainingRecords.stream().filter(Objects::nonNull)
+                        .forEach(tR -> this.trainingRecords.add(tR));
+            } else {
+                this.trainingRecords = new ArrayList<>();
+            }
+        }
     }
 
     public List<Case> getCases() {
@@ -46,7 +56,16 @@ public class CustomerSupport extends Employee {
     }
 
     public void setCases(List<Case> cases) {
-        this.cases = cases;
+        if (cases == null) {
+            this.cases = new ArrayList<>();
+        } else {
+            if (Utility.hasNotNull(Collections.singletonList(cases))) {
+                cases.stream().filter(Objects::nonNull)
+                        .forEach(c -> this.cases.add(c));
+            } else {
+                this.cases = new ArrayList<>();
+            }
+        }
     }
 
     public CustomerSupport getMentor() {
@@ -55,13 +74,5 @@ public class CustomerSupport extends Employee {
 
     public void setMentor(CustomerSupport mentor) {
         this.mentor = mentor;
-    }
-
-    public List<CustomerSupport> getMentees() {
-        return mentees;
-    }
-
-    public void setMentees(List<CustomerSupport> mentees) {
-        this.mentees = mentees;
     }
 }

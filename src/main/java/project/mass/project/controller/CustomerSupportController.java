@@ -69,20 +69,16 @@ public class CustomerSupportController {
             @RequestParam("caseTaskId") int caseTaskId,
             Model model
             ) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("caseTask", caseTaskItem);
-            return "customer-support-employees/task-item";
-        } else {
-            Case caseItem2 = this.customerSupportService.findCaseItemByID(id);
-            CaseTask caseTask = this.customerSupportService.findCaseTaskById(caseTaskId);
-            caseTask.setCaseItem(caseItem2);
-            caseTask.setName(caseTaskItem.getName());
-            caseTask.setStatus(caseTaskItem.getStatus());
-            caseTask.setPriority(caseTaskItem.getPriority());
-            caseTask.setEditedStatusReason(caseTaskItem.getEditedStatusReason());
-            this.customerSupportService.updateCaseTask(caseTaskItem, id);
-            model.addAttribute("caseTask", caseTask);
-            return "customer-support-employees/next-case-task";
-        }
+        Case caseItem2 = this.customerSupportService.findCaseItemByID(id);
+        CaseTask caseTask = this.customerSupportService.findCaseTaskById(caseTaskId);
+        caseTask.setCaseItem(caseItem2);
+        caseTask.setName(caseTaskItem.getName());
+        caseTask.setStatus(caseTaskItem.getStatus());
+        caseTask.setPriority(caseTaskItem.getPriority());
+        caseTask.setEditedStatusReason(caseTaskItem.getEditedStatusReason());
+        this.customerSupportService.updateCaseTask(caseTaskItem, id);
+        model.addAttribute("caseTask", caseTask);
+        return "customer-support-employees/next-case-task";
+
     }
 }

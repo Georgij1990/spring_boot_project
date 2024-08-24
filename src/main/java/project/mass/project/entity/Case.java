@@ -3,10 +3,13 @@ package project.mass.project.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import project.mass.project.Utility;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "case_item")
@@ -52,21 +55,22 @@ public class Case {
     public Case() {}
 
     public Case(String subject, CaseStatus status, LocalDate openingDate) {
-        this.subject = subject;
-        this.status = status;
-        this.openingDate = openingDate;
-        this.caseTasks = new ArrayList<>();
-        this.emailMessages = new ArrayList<>();
+        setSubject(subject);
+        setStatus(status);
+        setOpeningDate(openingDate);
+        setClosingDate(null);
+        setCaseTasks(null);
+        setEmailMessages(null);
     }
 
     public Case(String subject, CaseStatus status, LocalDate openingDate, LocalDate closingDate, List<CaseTask> caseTasks, CustomerSupport customerSupport, List<EmailMessage> emailMessages) {
-        this.subject = subject;
-        this.status = status;
-        this.openingDate = openingDate;
-        this.closingDate = closingDate;
-        this.caseTasks = caseTasks != null ? caseTasks : new ArrayList<>();
-        this.customerSupport = customerSupport;
-        this.emailMessages = emailMessages != null ? emailMessages : new ArrayList<>();
+        setSubject(subject);
+        setStatus(status);
+        setOpeningDate(openingDate);
+        setClosingDate(closingDate);
+        setCaseTasks(caseTasks);
+        setCustomerSupport(customerSupport);
+        setEmailMessages(emailMessages);
     }
 
     public int getId() {
@@ -78,6 +82,9 @@ public class Case {
     }
 
     public void setSubject(String subject) {
+        if (!Utility.validateString(subject)) {
+            throw new IllegalArgumentException("Subject cannot be empty or null");
+        }
         this.subject = subject;
     }
 
@@ -86,6 +93,9 @@ public class Case {
     }
 
     public void setStatus(CaseStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
         this.status = status;
     }
 
@@ -94,6 +104,9 @@ public class Case {
     }
 
     public void setOpeningDate(LocalDate openingDate) {
+        if (openingDate == null) {
+            throw new IllegalArgumentException("OpeningDate cannot be null");
+        }
         this.openingDate = openingDate;
     }
 
@@ -102,6 +115,9 @@ public class Case {
     }
 
     public void setClosingDate(LocalDate closingDate) {
+        if (closingDate != null && closingDate.isBefore(openingDate)) {
+            throw new IllegalArgumentException("ClosingDate cannot be before openingDate");
+        }
         this.closingDate = closingDate;
     }
 
@@ -110,7 +126,14 @@ public class Case {
     }
 
     public void setCaseTasks(List<CaseTask> caseTasks) {
-        this.caseTasks = caseTasks;
+        if (caseTasks == null) {
+            this.caseTasks = new ArrayList<>();
+        } else if (Utility.hasNotNull(Collections.singletonList(caseTasks))) {
+            caseTasks.stream().filter(Objects::nonNull)
+                    .forEach(cT -> this.caseTasks.add(cT));
+        } else {
+            this.caseTasks = new ArrayList<>();
+        }
     }
 
     public CustomerSupport getCustomerSupport() {
@@ -126,6 +149,13 @@ public class Case {
     }
 
     public void setEmailMessages(List<EmailMessage> emailMessages) {
-        this.emailMessages = emailMessages;
+        if (emailMessages == null) {
+            this.emailMessages = new ArrayList<>();
+        } else if (Utility.hasNotNull(Collections.singletonList(emailMessages))) {
+            emailMessages.stream().filter(Objects::nonNull)
+                    .forEach(eM -> this.emailMessages.add(eM));
+        } else {
+            this.emailMessages = new ArrayList<>();
+        }
     }
 }

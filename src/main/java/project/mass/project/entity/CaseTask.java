@@ -3,6 +3,7 @@ package project.mass.project.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import project.mass.project.Utility;
 
 @Entity
 @Table(name = "case_task")
@@ -33,17 +34,18 @@ public class CaseTask {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "case_id")
+    @NotNull
     private Case caseItem;
 
     public CaseTask() {
     }
 
     public CaseTask(String name, Status status, Priority priority, String editedStatusReason, Case caseItem) {
-        this.name = name;
-        this.status = status;
-        this.priority = priority;
-        this.editedStatusReason = editedStatusReason;
-        this.caseItem = caseItem;
+        setName(name);
+        setStatus(status);
+        setPriority(priority);
+        setEditedStatusReason(editedStatusReason);
+        setCaseItem(caseItem);
     }
 
     public int getId() {
@@ -55,6 +57,9 @@ public class CaseTask {
     }
 
     public void setName(String name) {
+        if (!Utility.validateString(name)) {
+            throw new IllegalArgumentException("Name cannot be empty or null");
+        }
         this.name = name;
     }
 
@@ -63,6 +68,9 @@ public class CaseTask {
     }
 
     public void setStatus(Status status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
         this.status = status;
     }
 
@@ -71,6 +79,9 @@ public class CaseTask {
     }
 
     public void setPriority(Priority priority) {
+        if (priority == null) {
+            throw new IllegalArgumentException("Priority cannot be null");
+        }
         this.priority = priority;
     }
 
@@ -79,6 +90,9 @@ public class CaseTask {
     }
 
     public void setEditedStatusReason(String editedStatusReason) {
+        if (editedStatusReason != null && (editedStatusReason.isEmpty() || editedStatusReason.isBlank())) {
+            throw new RuntimeException("Edited Status Reason value cannot blank.");
+        }
         this.editedStatusReason = editedStatusReason;
     }
 
@@ -87,6 +101,9 @@ public class CaseTask {
     }
 
     public void setCaseItem(Case caseItem) {
+        if (caseItem == null) {
+            throw new IllegalArgumentException("Case item cannot be null");
+        }
         this.caseItem = caseItem;
     }
 

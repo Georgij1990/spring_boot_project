@@ -30,7 +30,7 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
 
     @Override
     public void createCustomerSupportEmployees() {
-        Person person = new Person(
+        Person person1 = new Person(
                 LocalDate.of(1980, 3, 17),
                 "marcin.nowak@gmail.com",
                 "Marcin",
@@ -38,18 +38,77 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
                 "123-456-789"
         );
 
-        CustomerSupport customerSupport = new CustomerSupport(
+        Person person2 = new Person(
+                LocalDate.of(1991, 1, 8),
+                "a.nickolson@gmail.com",
+                "Andrew",
+                "Nickolson",
+                "123-456-789"
+        );
+
+        Person person3 = new Person(
+                LocalDate.of(1998, 7, 22),
+                "s.smith@gmail.com",
+                "Sam",
+                "Smith",
+                "123-456-789"
+        );
+
+        Person person4 = new Person(
+                LocalDate.of(2001, 10, 29),
+                "s.richardson@gmail.com",
+                "Sarah",
+                "Richardson",
+                "123-456-789"
+        );
+        CustomerSupport customerSupportEmployee1 = null;
+        CustomerSupport customerSupportEmployee2 = null;
+        CustomerSupport customerSupportEmployee3 = null;
+        CustomerSupport customerSupportEmployee4 = null;
+
+        customerSupportEmployee1 = new CustomerSupport(
                 LocalDate.now().minusYears(5),
                 ContractType.PERMANENT_CONTRACT,
                 30000.0,
-                person,
+                person1,
                 generateTrainingRecords(2)
         );
 
-        person.setCustomerSupport(customerSupport);
+        customerSupportEmployee2 = new CustomerSupport(
+                LocalDate.now().minusYears(5),
+                ContractType.PERMANENT_CONTRACT,
+                30000.0,
+                person2,
+                generateTrainingRecords(2)
+        );
+        customerSupportEmployee2.setMentor(customerSupportEmployee1);
 
-        this.personDAO.savePerson(person);
+        customerSupportEmployee3 = new CustomerSupport(
+                LocalDate.now().minusYears(5),
+                ContractType.PERMANENT_CONTRACT,
+                30000.0,
+                person3,
+                generateTrainingRecords(2)
+        );
+        customerSupportEmployee3.setMentor(customerSupportEmployee1);
 
+        customerSupportEmployee4 = new CustomerSupport(
+                LocalDate.now().minusYears(5),
+                ContractType.PERMANENT_CONTRACT,
+                30000.0,
+                person4,
+                generateTrainingRecords(2)
+        );
+        customerSupportEmployee4.setMentor(customerSupportEmployee1);
+
+        person1.setCustomerSupport(customerSupportEmployee1);
+        this.personDAO.savePerson(person1);
+        person2.setCustomerSupport(customerSupportEmployee2);
+        this.personDAO.savePerson(person2);
+        person3.setCustomerSupport(customerSupportEmployee3);
+        this.personDAO.savePerson(person3);
+        person4.setCustomerSupport(customerSupportEmployee4);
+        this.personDAO.savePerson(person4);
     }
 
     @Override
@@ -105,7 +164,7 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
                         "Task " + i,
                         Status.NOT_STARTED,
                         Priority.NORMAL,
-                        "",
+                        null,
                         caseItem
                 );
                 this.caseTaskDAO.saveCaseTask(caseTask);
