@@ -2,6 +2,9 @@ package project.mass.project.service;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import project.mass.project.dao.CaseDAO;
 import project.mass.project.dao.CaseTaskDAO;
@@ -141,8 +144,8 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     }
 
     @Override
-    public List<Case> findAllCasesByCustomerSupportId(int customerSupportId) {
-        return this.caseDAO.findCasesByCustomerSupportId(customerSupportId);
+    public Page<Case> findAllCasesByCustomerSupportId(int customerSupportId, Pageable pageable) {
+        return this.caseDAO.findCasesByCustomerSupportId(customerSupportId, pageable);
     }
 
     @Override
@@ -159,7 +162,7 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     public void createCaseTaskItems() {
         List<Case> caseItemList = this.findAllCaseItems();
         for (Case caseItem : caseItemList) {
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 20; i++) {
                 CaseTask caseTask = new CaseTask(
                         "Task " + i,
                         Status.NOT_STARTED,
@@ -193,8 +196,8 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     }
 
     @Override
-    public List<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId) {
-        return this.caseTaskDAO.findCaseTasksByCaseId(customerSupportId);
+    public Page<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId, Pageable pageable) {
+        return this.caseTaskDAO.findCaseTasksByCaseId(customerSupportId, pageable);
     }
 
     private static List<String> generateTrainingRecords(int i) {
@@ -211,7 +214,7 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
             createCaseItems();
             createCaseTaskItems();
         } else {
-            List<Case> caseList = this.caseDAO.findCasesByCustomerSupportId(customerSupport.get(0).getId());
+            Page<Case> caseList = this.caseDAO.findCasesByCustomerSupportId(customerSupport.get(0).getId(), PageRequest.of(0, 10));
             if (caseList.isEmpty()) {
                 createCaseItems();
                 createCaseTaskItems();

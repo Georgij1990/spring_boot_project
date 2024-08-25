@@ -43,6 +43,7 @@ public class CustomerSupport extends Employee {
             this.trainingRecords = new ArrayList<>();
         } else {
             if (Utility.hasNotNull(Collections.singletonList(trainingRecords))) {
+                this.trainingRecords = new ArrayList<>();
                 trainingRecords.stream().filter(Objects::nonNull)
                         .forEach(tR -> this.trainingRecords.add(tR));
             } else {

@@ -2,6 +2,9 @@ package project.mass.project.dao;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import project.mass.project.entity.Case;
@@ -31,10 +34,17 @@ public class CaseTaskDAOImpl implements CaseTaskDAO {
     }
 
     @Override
-    public List<CaseTask> findCaseTasksByCaseId(int id) {
-        return this.em.createQuery("SELECT ct FROM CaseTask ct WHERE ct.caseItem.id = :id", CaseTask.class)
+    public Page<CaseTask> findCaseTasksByCaseId(int id, Pageable pageable) {
+        List<CaseTask> caseTaskList = this.em.createQuery("SELECT ct FROM CaseTask ct WHERE ct.caseItem.id = :id", CaseTask.class)
                 .setParameter("id", id)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
                 .getResultList();
+        long total = em.createQuery("SELECT COUNT(c) FROM CaseTask c WHERE c.caseItem.id = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult();
+
+        return new PageImpl<>(caseTaskList, pageable, total);
     }
 
     @Override

@@ -129,6 +129,7 @@ public class Case {
         if (caseTasks == null) {
             this.caseTasks = new ArrayList<>();
         } else if (Utility.hasNotNull(Collections.singletonList(caseTasks))) {
+            this.caseTasks = new ArrayList<>();
             caseTasks.stream().filter(Objects::nonNull)
                     .forEach(cT -> this.caseTasks.add(cT));
         } else {

@@ -1,5 +1,7 @@
 package project.mass.project.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import project.mass.project.entity.Case;
 import project.mass.project.entity.CaseTask;
 import project.mass.project.entity.CustomerSupport;
@@ -12,12 +14,12 @@ public interface CustomerSupportService {
     List<CustomerSupport> findAllCustomerSupportEmployees();
     CustomerSupport findCustomerSupportEmployeeById(int id);
     void createCaseItems();
-    List<Case> findAllCasesByCustomerSupportId(int customerSupportId);
+    Page<Case> findAllCasesByCustomerSupportId(int customerSupportId, Pageable pageable);
     List<Case> findAllCaseItems();
     Case findCaseItemByID(int caseItemId);
     void createCaseTaskItems();
     void saveCaseTask(CaseTask caseTask);
     void updateCaseTask(CaseTask caseTask, int id);
     CaseTask findCaseTaskById(int caseTaskId);
-    List<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId);
+    Page<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId, Pageable pageable);
 }

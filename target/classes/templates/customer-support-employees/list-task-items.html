@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="table-container">
-        <input type="hidden" id="customerSupportId" th:value="${caseTaskList.get(0).caseItem.customerSupport.id}">
+        <input type="hidden" id="customerSupportId" th:value="${caseItem.customerSupport.id}">
         <table class="table table-border table-striped w-100">
             <thead>
             <tr class="title">
@@ -33,6 +33,7 @@
             <tbody>
             <tr th:each="caseTask : ${caseTaskList}" onclick="highlightAndSubmit(this)">
                 <input type="hidden" class="caseTaskId" th:value="${caseTask.id}">
+                <input type="hidden" class="employeeId" th:value="${caseItem.customerSupport.id}">
                 <td class="text-color" th:text="${caseTask.name}"></td>
                 <td class="text-color" th:text="${caseTask.status}"></td>
                 <td class="text-color" th:text="${caseTask.priority}"></td>
@@ -40,9 +41,41 @@
             </tr>
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li th:classappend="${currentPage == 0} ? 'disabled' : ''" class="page-item">
+                    <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id}, page=${currentPage - 1})}" class="page-link">Previous</a>
+                </li>
+
+                <li th:if="${startPage > 0}" class="page-item">
+                    <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id}, page=0)}" class="page-link">1</a>
+                </li>
+                <li th:if="${startPage > 1}" class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(startPage, endPage)}"
+                    th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
+                    <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id}, page=${i})}" class="page-link" th:text="${i + 1}">1</a>
+                </li>
+
+                <li th:if="${endPage < totalPages - 1}" class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                <li th:if="${endPage < totalPages - 1}" class="page-item">
+                    <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id}, page=${totalPages - 1})}" class="page-link" th:text="${totalPages}"></a>
+                </li>
+
+                <li th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''" class="page-item">
+                    <a th:href="@{/customerSupportEmployees/caseTasks(caseItemId=${caseItem.id}, page=${currentPage + 1})}" class="page-link">Next</a>
+                </li>
+            </ul>
+        </nav>
+
         <div class="button-group">
             <button type="button" class="btn btn-secondary me-2" onclick="exitToHomePage()">Exit</button>
-            <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Back</button>
+            <button id="backLink" type="button" class="btn btn-secondary me-2" onclick="navigateBack()">Back</button>
             <a id="submitLink" href="#" class="btn btn-primary">Update</a>
         </div>
     </div>
@@ -50,6 +83,7 @@
 
 <script>
     let storedCustomerSupportId = document.getElementById('customerSupportId').value;
+    const employeeId = document.querySelector('.employeeId').value;
 
     function highlightAndSubmit(row) {
         const rows = document.querySelectorAll('tbody tr');
@@ -72,6 +106,14 @@
             window.location.href = '/customerSupportEmployees/home_page?employeeId=' + encodeURIComponent(storedCustomerSupportId);
         } else {
             console.error('No customerSupportId available.');
+        }
+    }
+
+    function navigateBack() {
+        if (employeeId) {
+            window.location.href = '/customerSupportEmployees/caseItems?employeeId=' + encodeURIComponent(employeeId);
+        } else {
+            console.error('No caseItemId found.');
         }
     }
 </script>
