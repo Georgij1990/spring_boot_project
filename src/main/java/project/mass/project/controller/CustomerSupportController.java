@@ -93,7 +93,6 @@ public class CustomerSupportController {
         this.customerSupportService.updateCaseTask(caseTaskItem, id);
         model.addAttribute("caseTask", caseTask);
         return "customer-support-employees/next-case-task";
-
     }
 
     public <T> void setModelAttributesForPagination(int page, Page<T> pageList, Model model) {

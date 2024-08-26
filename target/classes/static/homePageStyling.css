@@ -204,3 +204,11 @@ hr {
 error {
     color: #b71c1c;
 }
+
+input:invalid {
+    border-color: red;
+}
+
+input:valid {
+    border-color: green;
+}
