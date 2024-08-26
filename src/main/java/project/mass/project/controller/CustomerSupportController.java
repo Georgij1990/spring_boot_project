@@ -90,7 +90,7 @@ public class CustomerSupportController {
         caseTask.setStatus(caseTaskItem.getStatus());
         caseTask.setPriority(caseTaskItem.getPriority());
         caseTask.setEditedStatusReason(caseTaskItem.getEditedStatusReason());
-        this.customerSupportService.updateCaseTask(caseTaskItem, id);
+        this.customerSupportService.updateCaseTask(caseTask);
         model.addAttribute("caseTask", caseTask);
         return "customer-support-employees/next-case-task";
     }

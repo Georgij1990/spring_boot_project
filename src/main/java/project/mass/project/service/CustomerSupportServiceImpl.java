@@ -181,12 +181,7 @@ public class CustomerSupportServiceImpl implements CustomerSupportService {
     }
 
     @Override
-    public void updateCaseTask(CaseTask caseTask, int id) {
-        Case existingCaseItem = caseDAO.findCaseById(id);
-        if (existingCaseItem == null) {
-            throw new IllegalArgumentException("CaseItem with ID " + caseTask.getCaseItem().getId() + " does not exist.");
-        }
-        caseTask.setCaseItem(existingCaseItem);
+    public void updateCaseTask(CaseTask caseTask) {
         caseTaskDAO.updateCaseTask(caseTask);
     }
 

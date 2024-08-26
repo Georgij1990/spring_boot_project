@@ -19,7 +19,7 @@ public interface CustomerSupportService {
     Case findCaseItemByID(int caseItemId);
     void createCaseTaskItems();
     void saveCaseTask(CaseTask caseTask);
-    void updateCaseTask(CaseTask caseTask, int id);
+    void updateCaseTask(CaseTask caseTask);
     CaseTask findCaseTaskById(int caseTaskId);
     Page<CaseTask> findAllCaseTasksByCustomerSupportId(int customerSupportId, Pageable pageable);
 }
