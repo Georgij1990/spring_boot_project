@@ -13,13 +13,13 @@ import java.util.Objects;
 @Table(name = "customer_support")
 public class CustomerSupport extends Employee {
 
+    @Column(name = "record")
     @ElementCollection
     @CollectionTable(name = "training_records", joinColumns = @JoinColumn(name = "customer_support_id"))
-    @Column(name = "record")
-    private List<String> trainingRecords;
+    private List<String> trainingRecords = new ArrayList<>();
 
     @OneToMany(mappedBy = "customerSupport")
-    private List<Case> cases;
+    private List<Case> cases = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "mentor_id")
@@ -31,6 +31,7 @@ public class CustomerSupport extends Employee {
     public CustomerSupport(LocalDate hireDate, ContractType contractType, Double salary, Person person, List<String> trainingRecords) {
         super(hireDate, contractType, salary, person);
         setTrainingRecords(trainingRecords);
+        setCases(null);
         setMentor(null);
     }
 
@@ -39,16 +40,8 @@ public class CustomerSupport extends Employee {
     }
 
     public void setTrainingRecords(List<String> trainingRecords) {
-        if (trainingRecords == null) {
-            this.trainingRecords = new ArrayList<>();
-        } else {
-            if (Utility.hasNotNull(Collections.singletonList(trainingRecords))) {
-                this.trainingRecords = new ArrayList<>();
-                trainingRecords.stream().filter(Objects::nonNull)
-                        .forEach(tR -> this.trainingRecords.add(tR));
-            } else {
-                this.trainingRecords = new ArrayList<>();
-            }
+        if (Utility.hasNotNull(Collections.singletonList(trainingRecords))) {
+            trainingRecords.stream().filter(Objects::nonNull).filter(tR -> !tR.isBlank()).forEach(tR -> this.trainingRecords.add(tR));
         }
     }
 
@@ -57,15 +50,9 @@ public class CustomerSupport extends Employee {
     }
 
     public void setCases(List<Case> cases) {
-        if (cases == null) {
-            this.cases = new ArrayList<>();
-        } else {
-            if (Utility.hasNotNull(Collections.singletonList(cases))) {
-                cases.stream().filter(Objects::nonNull)
-                        .forEach(c -> this.cases.add(c));
-            } else {
-                this.cases = new ArrayList<>();
-            }
+        if (Utility.hasNotNull(Collections.singletonList(cases))) {
+            cases.stream().filter(Objects::nonNull)
+                    .forEach(c -> this.cases.add(c));
         }
     }
 

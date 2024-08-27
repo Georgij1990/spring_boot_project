@@ -14,27 +14,27 @@ public class CaseTask {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
     @NotNull(message = "is required")
     @NotEmpty(message = "cannot be empty")
+    @Column(name = "name")
     private String name;
 
+    @NotNull(message = "is required")
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    @NotNull(message = "is required")
     private Status status;
 
+    @NotNull(message = "is required")
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
-    @NotNull(message = "is required")
     private Priority priority;
 
     @Column(name = "edited_status_reason")
     private String editedStatusReason;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "case_id")
-    @NotNull
     private Case caseItem;
 
     public CaseTask() {
