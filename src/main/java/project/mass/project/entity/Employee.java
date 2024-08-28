@@ -1,6 +1,7 @@
 package project.mass.project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -16,16 +17,20 @@ public abstract class Employee {
     @Column(name = "id")
     private int id;
 
+    @NotNull
     @Column(name = "hire_date")
     private LocalDate hireDate;
 
+    @NotNull
     @Enumerated(STRING)
     @Column(name = "contract_type")
     private ContractType contractType;
 
+    @NotNull
     @Column(name = "salary")
     private Double salary;
 
+    @NotNull
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private Person person;
 
@@ -33,10 +38,10 @@ public abstract class Employee {
     }
 
     public Employee(LocalDate hireDate, ContractType contractType, Double salary, Person person) {
-        this.hireDate = hireDate;
-        this.contractType = contractType;
-        this.salary = salary;
-        this.person = person;
+        setHireDate(hireDate);
+        setContractType(contractType);
+        setSalary(salary);
+        setPerson(person);
     }
 
     public int getId() {
@@ -48,6 +53,9 @@ public abstract class Employee {
     }
 
     public void setHireDate(LocalDate hireDate) {
+        if (hireDate == null) {
+            throw new IllegalArgumentException("Hire date cannot be null");
+        }
         this.hireDate = hireDate;
     }
 
@@ -56,6 +64,9 @@ public abstract class Employee {
     }
 
     public void setContractType(ContractType contactType) {
+        if (contactType == null) {
+            throw new IllegalArgumentException("Contact type cannot be null");
+        }
         this.contractType = contactType;
     }
 
@@ -64,6 +75,11 @@ public abstract class Employee {
     }
 
     public void setSalary(Double salary) {
+        if (salary == null) {
+            throw new IllegalArgumentException("Salary cannot be null");
+        } else if (salary < 0) {
+            throw new IllegalArgumentException("Salary cannot be negative");
+        }
         this.salary = salary;
     }
 
@@ -72,6 +88,9 @@ public abstract class Employee {
     }
 
     public void setPerson(Person person) {
+        if (person == null) {
+            throw new IllegalArgumentException("Person cannot be null");
+        }
         this.person = person;
     }
 }

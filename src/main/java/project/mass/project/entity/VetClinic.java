@@ -34,9 +34,11 @@ public class VetClinic {
     @Column(name = "email")
     private String email;
 
+    @NotNull
     @OneToMany(mappedBy = "vetClinic")
     private List<Division> divisions = new ArrayList<>();
 
+    @NotNull
     @OneToMany(mappedBy = "vetClinic")
     private List<Visit> visits = new ArrayList<>();
 
