@@ -20,23 +20,24 @@ public class Case {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "subject")
     @NotNull(message = "is required")
     @NotEmpty(message = "cannot be empty")
+    @Column(name = "subject")
     private String subject;
 
+    @NotNull(message = "is required")
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    @NotNull(message = "is required")
     private CaseStatus status;
 
-    @Column(name = "opening_date")
     @NotNull(message = "is required")
+    @Column(name = "opening_date")
     private LocalDate openingDate;
 
     @Column(name = "closing_date")
     private LocalDate closingDate;
 
+    @NotNull
     @OneToMany(mappedBy = "caseItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CaseTask> caseTasks = new ArrayList<>();
 
@@ -44,13 +45,14 @@ public class Case {
     @JoinColumn(name = "customer_support_id")
     private CustomerSupport customerSupport;
 
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "case_email_message",
             joinColumns = @JoinColumn(name = "case_id"),
             inverseJoinColumns = @JoinColumn(name = "email_message_id")
     )
-    private List<EmailMessage> emailMessages;
+    private List<EmailMessage> emailMessages = new ArrayList<>();
 
     public Case() {}
 
@@ -116,25 +118,33 @@ public class Case {
 
     public void setClosingDate(LocalDate closingDate) {
         if (closingDate != null && closingDate.isBefore(openingDate)) {
-            throw new IllegalArgumentException("ClosingDate cannot be before openingDate");
+            throw new IllegalArgumentException("ClosingDate cannot be before openingDate or null");
         }
         this.closingDate = closingDate;
     }
 
     public List<CaseTask> getCaseTasks() {
-        return caseTasks;
+        return List.copyOf(caseTasks);
     }
 
     public void setCaseTasks(List<CaseTask> caseTasks) {
-        if (caseTasks == null) {
-            this.caseTasks = new ArrayList<>();
-        } else if (Utility.hasNotNull(Collections.singletonList(caseTasks))) {
-            this.caseTasks = new ArrayList<>();
-            caseTasks.stream().filter(Objects::nonNull)
-                    .forEach(cT -> this.caseTasks.add(cT));
-        } else {
-            this.caseTasks = new ArrayList<>();
+        if (Utility.hasNotNull(Collections.singletonList(caseTasks))) {
+            caseTasks.stream().filter(Objects::nonNull).forEach(cT -> this.caseTasks.add(cT));
         }
+    }
+
+    public void addCaseTask(CaseTask cT) {
+        if (cT == null) {
+            throw new IllegalArgumentException("Case task cannot be null");
+        }
+        this.caseTasks.add(cT);
+    }
+
+    public void removeCaseTask(CaseTask cT) {
+        if (cT == null) {
+            throw new IllegalArgumentException("Case task cannot be null");
+        }
+        this.caseTasks.remove(cT);
     }
 
     public CustomerSupport getCustomerSupport() {
@@ -146,17 +156,26 @@ public class Case {
     }
 
     public List<EmailMessage> getEmailMessages() {
-        return emailMessages;
+        return List.copyOf(emailMessages);
     }
 
     public void setEmailMessages(List<EmailMessage> emailMessages) {
-        if (emailMessages == null) {
-            this.emailMessages = new ArrayList<>();
-        } else if (Utility.hasNotNull(Collections.singletonList(emailMessages))) {
-            emailMessages.stream().filter(Objects::nonNull)
-                    .forEach(eM -> this.emailMessages.add(eM));
-        } else {
-            this.emailMessages = new ArrayList<>();
+        if (Utility.hasNotNull(Collections.singletonList(emailMessages))) {
+            emailMessages.stream().filter(Objects::nonNull).forEach(eM -> this.emailMessages.add(eM));
         }
+    }
+
+    public void addEmailMessage(EmailMessage em) {
+        if (em == null) {
+            throw new IllegalArgumentException("Email message cannot be null");
+        }
+        this.emailMessages.add(em);
+    }
+
+    public void removeEmailMessage(EmailMessage em) {
+        if (em == null) {
+            throw new IllegalArgumentException("Email message cannot be null");
+        }
+        this.emailMessages.remove(em);
     }
 }

@@ -1,6 +1,7 @@
 package project.mass.project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import project.mass.project.Utility;
 
 import java.time.LocalDate;
@@ -13,11 +14,13 @@ import java.util.Objects;
 @Table(name = "customer_support")
 public class CustomerSupport extends Employee {
 
+    @NotNull
     @Column(name = "record")
     @ElementCollection
     @CollectionTable(name = "training_records", joinColumns = @JoinColumn(name = "customer_support_id"))
     private List<String> trainingRecords = new ArrayList<>();
 
+    @NotNull
     @OneToMany(mappedBy = "customerSupport")
     private List<Case> cases = new ArrayList<>();
 
@@ -36,7 +39,7 @@ public class CustomerSupport extends Employee {
     }
 
     public List<String> getTrainingRecords() {
-        return trainingRecords;
+        return List.copyOf(trainingRecords);
     }
 
     public void setTrainingRecords(List<String> trainingRecords) {
@@ -45,15 +48,44 @@ public class CustomerSupport extends Employee {
         }
     }
 
+    public void addTrainingRecord(String record) {
+        if (!Utility.validateString(record)) {
+            throw new IllegalArgumentException("Invalid record");
+        } else if (!this.trainingRecords.contains(record)) {
+            throw new IllegalArgumentException("Training record has already been added");
+        }
+        trainingRecords.add(record);
+    }
+
+    public void removeTrainingRecord(String record) {
+        if (!Utility.validateString(record)) {
+            throw new IllegalArgumentException("Invalid record");
+        }
+        trainingRecords.remove(record);
+    }
+
     public List<Case> getCases() {
-        return cases;
+        return List.copyOf(cases);
     }
 
     public void setCases(List<Case> cases) {
         if (Utility.hasNotNull(Collections.singletonList(cases))) {
-            cases.stream().filter(Objects::nonNull)
-                    .forEach(c -> this.cases.add(c));
+            cases.stream().filter(Objects::nonNull).forEach(c -> this.cases.add(c));
         }
+    }
+
+    public void addCase(Case cases) {
+        if (cases == null) {
+            throw new IllegalArgumentException("Case cannot be null");
+        }
+        this.cases.add(cases);
+    }
+
+    public void removeCase(Case cases) {
+        if (cases == null) {
+            throw new IllegalArgumentException("Case that you want to delete cannot be null");
+        }
+        this.cases.remove(cases);
     }
 
     public CustomerSupport getMentor() {
