@@ -41,6 +41,7 @@ public class Case {
     @OneToMany(mappedBy = "caseItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CaseTask> caseTasks = new ArrayList<>();
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_support_id")
     private CustomerSupport customerSupport;
@@ -56,10 +57,11 @@ public class Case {
 
     public Case() {}
 
-    public Case(String subject, CaseStatus status, LocalDate openingDate) {
+    public Case(String subject, CaseStatus status, LocalDate openingDate, CustomerSupport customerSupport) {
         setSubject(subject);
         setStatus(status);
         setOpeningDate(openingDate);
+        setCustomerSupport(customerSupport);
         setClosingDate(null);
         setCaseTasks(null);
         setEmailMessages(null);
@@ -152,6 +154,9 @@ public class Case {
     }
 
     public void setCustomerSupport(CustomerSupport customerSupport) {
+        if (customerSupport == null) {
+            throw new IllegalArgumentException("Customer support cannot be null");
+        }
         this.customerSupport = customerSupport;
     }
 
