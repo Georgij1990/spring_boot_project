@@ -58,7 +58,7 @@ public class Division {
     }
 
     public List<Veterinarian> getVeterinarians() {
-        return veterinarians;
+        return List.copyOf(this.veterinarians);
     }
 
     public void setVeterinarians(List<Veterinarian> veterinarians) {
@@ -67,6 +67,20 @@ public class Division {
         } else {
             throw new IllegalArgumentException("Veterinarians cannot be null or empty");
         }
+    }
+
+    public void addVeterinarian(Veterinarian veterinarian) {
+        if (veterinarians == null) {
+            throw new IllegalArgumentException("Veterinarian that you want to add cannot be null");
+        }
+        this.veterinarians.add(veterinarian);
+    }
+
+    public void deleteVeterinarian(Veterinarian veterinarian) {
+        if (veterinarians == null) {
+            throw new IllegalArgumentException("Veterinarian that you want to delete cannot be null");
+        }
+        this.veterinarians.remove(veterinarian);
     }
 
     public VetClinic getVetClinic() {

@@ -29,6 +29,7 @@ public class EmailAttachment {
     @Column(name = "content")
     private String content;
 
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "email_message_email_attachment",
@@ -73,12 +74,26 @@ public class EmailAttachment {
     }
 
     public List<EmailMessage> getEmailMessages() {
-        return emailMessages;
+        return List.copyOf(this.emailMessages);
     }
 
     public void setEmailMessages(List<EmailMessage> emailMessages) {
         if (Utility.hasNotNull(Collections.singletonList(emailMessages))) {
             emailMessages.stream().filter(Objects::nonNull).forEach(eM -> this.emailMessages.add(eM));
         }
+    }
+
+    public void addEmailMessage(EmailMessage emailMessage) {
+        if (emailMessage == null) {
+            throw new IllegalArgumentException("Email message that you want to add cannot be null");
+        }
+        this.emailMessages.add(emailMessage);
+    }
+
+    public void removeEmailMessage(EmailMessage emailMessage) {
+        if (emailMessage == null) {
+            throw new IllegalArgumentException("Email message that you want to remove cannot be null");
+        }
+        this.emailMessages.remove(emailMessage);
     }
 }
