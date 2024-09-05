@@ -63,13 +63,19 @@ public class Veterinarian extends Employee {
 
     public void setQualifications(List<String> qualifications) {
         if (Utility.hasNotNull(Collections.singletonList(qualifications))) {
-            qualifications.stream().filter(Objects::nonNull).forEach(q -> this.qualifications.add(q));
+            qualifications.stream().filter(Objects::nonNull).filter(q -> !q.isBlank()).forEach(q -> {
+                if (!this.qualifications.contains(q)) {
+                    this.qualifications.add(q);
+                }
+            });
         }
     }
 
     public void addQualification(String qualification) {
         if (!Utility.validateString(qualification)) {
             throw new IllegalArgumentException("Qualification that you want to add cannot be null or empty");
+        } else if (this.qualifications.contains(qualification)) {
+            throw new IllegalArgumentException("Qualification record already exists.");
         }
         this.qualifications.add(qualification);
     }

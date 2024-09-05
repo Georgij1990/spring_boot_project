@@ -44,15 +44,19 @@ public class CustomerSupport extends Employee {
 
     public void setTrainingRecords(List<String> trainingRecords) {
         if (Utility.hasNotNull(Collections.singletonList(trainingRecords))) {
-            trainingRecords.stream().filter(Objects::nonNull).filter(tR -> !tR.isBlank()).forEach(tR -> this.trainingRecords.add(tR));
+            trainingRecords.stream().filter(Objects::nonNull).filter(tR -> !tR.isBlank()).forEach(tR ->  {
+                if (!this.trainingRecords.contains(tR)) {
+                    this.trainingRecords.add(tR);
+                }
+            });
         }
     }
 
     public void addTrainingRecord(String record) {
         if (!Utility.validateString(record)) {
             throw new IllegalArgumentException("Invalid record");
-        } else if (!this.trainingRecords.contains(record)) {
-            throw new IllegalArgumentException("Training record has already been added");
+        } else if (this.trainingRecords.contains(record)) {
+            throw new IllegalArgumentException("Training record already exists");
         }
         trainingRecords.add(record);
     }
