@@ -88,7 +88,7 @@ public class VetClinic {
     }
 
     public List<Division> getDivisions() {
-        return divisions;
+        return List.copyOf(this.divisions);
     }
 
     public void setDivisions(List<Division> divisions) {
@@ -97,13 +97,49 @@ public class VetClinic {
         }
     }
 
+    public void addDivision(Division division) {
+        if (division == null) {
+            throw new IllegalArgumentException("division that you want to add cannot be null");
+        }
+        this.divisions.add(division);
+    }
+
+    public void removeDivision(Division division) {
+        if (division == null) {
+            throw new IllegalArgumentException("division that you want to remove cannot be null");
+        }
+        this.divisions.remove(division);
+    }
+
     public List<Visit> getVisits() {
-        return visits;
+        return List.copyOf(this.visits);
     }
 
     public void setVisits(List<Visit> visits) {
         if (Utility.hasNotNull(Collections.singletonList(visits))) {
             visits.stream().filter(Objects::nonNull).forEach(d -> this.visits.add(d));
+        }
+    }
+
+    public void addVisit(Visit visit) {
+        if (visit == null) {
+            throw new IllegalArgumentException("visit that you want to add cannot be null");
+        }
+        this.visits.add(visit);
+    }
+
+    public void removeVisit(Visit visit) {
+        if (visit == null) {
+            throw new IllegalArgumentException("visit that you want to remove cannot be null");
+        }
+        this.visits.remove(visit);
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validatePetOwnerList() {
+        if (this.divisions.isEmpty()) {
+            throw new IllegalArgumentException("VetClinic must have at least one Division before being saved or updated.");
         }
     }
 }

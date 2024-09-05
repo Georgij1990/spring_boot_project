@@ -24,8 +24,8 @@ public class EmailAttachmentDAOImpl implements EmailAttachmentDAO {
 
     @Override
     @Transactional
-    public void deleteEmailAttachment(EmailAttachment emailAttachment) {
-        EmailAttachment old = this.em.find(EmailAttachment.class, emailAttachment.getId());
+    public void deleteEmailAttachment(int emailAttachmentId) {
+        EmailAttachment old = this.em.find(EmailAttachment.class, emailAttachmentId);
         this.em.remove(old);
     }
 

@@ -56,6 +56,7 @@ public class Vaccine {
         if (!Utility.validateString(name)) {
             throw new IllegalArgumentException("Vaccine name cannot be empty");
         }
+        this.name = name;
     }
 
     public String getDisease() {

@@ -76,7 +76,7 @@ public class CustomerSupport extends Employee {
 
     public void addCase(Case cases) {
         if (cases == null) {
-            throw new IllegalArgumentException("Case cannot be null");
+            throw new IllegalArgumentException("Case that you want to add cannot be null");
         }
         this.cases.add(cases);
     }

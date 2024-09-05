@@ -30,8 +30,8 @@ public class DivisionDAOImpl implements DivisionDAO {
 
     @Override
     @Transactional
-    public void deleteDivision(Division division) {
-        Division div = this.em.find(Division.class, division.getId());
+    public void deleteDivision(int divisionId) {
+        Division div = this.em.find(Division.class, divisionId);
         this.em.remove(div);
     }
 

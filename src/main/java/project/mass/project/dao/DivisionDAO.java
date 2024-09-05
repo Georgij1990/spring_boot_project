@@ -7,7 +7,7 @@ import java.util.List;
 public interface DivisionDAO {
     void saveDivision(Division division);
     void updateDivision(Division division);
-    void deleteDivision(Division division);
+    void deleteDivision(int divisionId);
     Division getDivision(int id);
     List<Division> getDivisions();
 }

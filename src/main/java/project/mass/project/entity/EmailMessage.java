@@ -59,10 +59,12 @@ public class EmailMessage {
     public EmailMessage() {
     }
 
-    public EmailMessage(List<String> to, String subject, String message) {
+    public EmailMessage(String fromAddress) {
+        setFromAddress(fromAddress);
+    }
+
+    public EmailMessage(List<String> to) {
         setTo(to);
-        setSubject(subject);
-        setMessage(message);
     }
 
     public int getId() {

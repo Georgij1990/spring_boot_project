@@ -84,13 +84,27 @@ public class PetOwner {
     }
 
     public List<Visit> getVisits() {
-        return visits;
+        return List.copyOf(this.visits);
     }
 
     public void setVisits(List<Visit> visits) {
         if (Utility.hasNotNull(Collections.singletonList(visits))) {
             visits.stream().filter(Objects::nonNull).forEach(v -> this.visits.add(v));
         }
+    }
+
+    public void addVisit(Visit visit) {
+        if (visit == null) {
+            throw new IllegalArgumentException("visit that you want to add cannot be null");
+        }
+        this.visits.add(visit);
+    }
+
+    public void removeVisit(Visit visit) {
+        if (visit == null) {
+            throw new IllegalArgumentException("visit that you want to remove cannot be null");
+        }
+        this.visits.remove(visit);
     }
 
     public Person getPerson() {
@@ -105,12 +119,26 @@ public class PetOwner {
     }
 
     public List<Pet> getPets() {
-        return pets;
+        return List.copyOf(this.pets);
     }
 
     public void setPets(List<Pet> pets) {
         if (Utility.hasNotNull(Collections.singletonList(pets))) {
             pets.stream().filter(Objects::nonNull).forEach(p -> this.pets.add(p));
         }
+    }
+
+    public void addPet(Pet pet) {
+        if (pet == null) {
+            throw new IllegalArgumentException("pet that you want to add cannot be null");
+        }
+        this.pets.add(pet);
+    }
+
+    public void removePet(Pet pet) {
+        if (pet == null) {
+            throw new IllegalArgumentException("pet that you want to remove cannot be null");
+        }
+        this.pets.remove(pet);
     }
 }

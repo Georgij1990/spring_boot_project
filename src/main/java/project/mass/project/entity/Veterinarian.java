@@ -58,7 +58,7 @@ public class Veterinarian extends Employee {
     }
 
     public List<String> getQualifications() {
-        return qualifications;
+        return List.copyOf(this.qualifications);
     }
 
     public void setQualifications(List<String> qualifications) {
@@ -67,14 +67,42 @@ public class Veterinarian extends Employee {
         }
     }
 
+    public void addQualification(String qualification) {
+        if (!Utility.validateString(qualification)) {
+            throw new IllegalArgumentException("Qualification that you want to add cannot be null or empty");
+        }
+        this.qualifications.add(qualification);
+    }
+
+    public void removeQualification(String qualification) {
+        if (!Utility.validateString(qualification)) {
+            throw new IllegalArgumentException("Qualification that you want to remove cannot be null or empty");
+        }
+        this.qualifications.remove(qualification);
+    }
+
     public List<VeterinarianProcedure> getVeterinarianProcedures() {
-        return veterinarianProcedures;
+        return List.copyOf(this.veterinarianProcedures);
     }
 
     public void setVeterinarianProcedures(List<VeterinarianProcedure> veterinarianProcedures) {
         if (Utility.hasNotNull(Collections.singletonList(veterinarianProcedures))) {
             veterinarianProcedures.stream().filter(Objects::nonNull).forEach(vP -> this.veterinarianProcedures.add(vP));
         }
+    }
+
+    public void addVeterinarianProcedure(VeterinarianProcedure vP) {
+        if (vP == null) {
+            throw new IllegalArgumentException("Veterinarian procedure that you want to add cannot be null");
+        }
+        this.veterinarianProcedures.add(vP);
+    }
+
+    public void removeVeterinarianProcedure(VeterinarianProcedure vP) {
+        if (vP == null) {
+            throw new IllegalArgumentException("Veterinarian procedure that you want to remove cannot be null");
+        }
+        this.veterinarianProcedures.remove(vP);
     }
 
     public Division getDivision() {

@@ -90,7 +90,7 @@ public class Pet {
     }
 
     public List<Referral> getReferrals() {
-        return referrals;
+        return List.copyOf(this.referrals);
     }
 
     public void setReferrals(List<Referral> referrals) {
@@ -99,8 +99,22 @@ public class Pet {
         }
     }
 
+    public void addReferral(Referral referral) {
+        if (referral == null) {
+            throw new IllegalArgumentException("Referral that you want to add cannot be null");
+        }
+        this.referrals.add(referral);
+    }
+
+    public void removeReferral(Referral referral) {
+        if (referral == null) {
+            throw new IllegalArgumentException("Referral that you want to remove cannot be null");
+        }
+        this.referrals.remove(referral);
+    }
+
     public List<Vaccine> getVaccines() {
-        return vaccines;
+        return List.copyOf(this.vaccines);
     }
 
     public void setVaccines(List<Vaccine> vaccines) {
@@ -109,8 +123,22 @@ public class Pet {
         }
     }
 
+    public void addVaccine(Vaccine vaccine) {
+        if (vaccine == null) {
+            throw new IllegalArgumentException("Vaccine that you want to add cannot be null");
+        }
+        this.vaccines.add(vaccine);
+    }
+
+    public void removeVaccine(Vaccine vaccine) {
+        if (vaccine == null) {
+            throw new IllegalArgumentException("Vaccine that you want to remove cannot be null");
+        }
+        this.vaccines.remove(vaccine);
+    }
+
     public List<VeterinarianProcedure> getVeterinarianProcedures() {
-        return veterinarianProcedures;
+        return List.copyOf(this.veterinarianProcedures);
     }
 
     public void setVeterinarianProcedures(List<VeterinarianProcedure> veterinarianProcedures) {
@@ -119,13 +147,49 @@ public class Pet {
         }
     }
 
+    public void addVeterinarianProcedure(VeterinarianProcedure vP) {
+        if (vP == null) {
+            throw new IllegalArgumentException("VeterinarianProcedure that you want to add cannot be null");
+        }
+        this.veterinarianProcedures.add(vP);
+    }
+
+    public void removeVeterinarianProcedure(VeterinarianProcedure vP) {
+        if (vP == null) {
+            throw new IllegalArgumentException("VeterinarianProcedure that you want to remove cannot be null");
+        }
+        this.veterinarianProcedures.remove(vP);
+    }
+
     public List<PetOwner> getPetOwnerList() {
-        return petOwnerList;
+        return List.copyOf(this.petOwnerList);
     }
 
     public void setPetOwnerList(List<PetOwner> petOwnerList) {
         if (Utility.hasNotNull(Collections.singletonList(petOwnerList))) {
             petOwnerList.stream().filter(Objects::nonNull).forEach(pO -> this.petOwnerList.add(pO));
+        }
+    }
+
+    public void addPetOwner(PetOwner petOwner) {
+        if (petOwner == null) {
+            throw new IllegalArgumentException("PetOwner that you want to add cannot be null");
+        }
+        this.petOwnerList.add(petOwner);
+    }
+
+    public void removePetOwner(PetOwner petOwner) {
+        if (petOwner == null) {
+            throw new IllegalArgumentException("PetOwner that you want to remove cannot be null");
+        }
+        this.petOwnerList.remove(petOwner);
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validatePetOwnerList() {
+        if (this.petOwnerList.isEmpty()) {
+            throw new IllegalArgumentException("Pet must have at least one PetOwner before being saved or updated.");
         }
     }
 }

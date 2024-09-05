@@ -64,8 +64,6 @@ public class Division {
     public void setVeterinarians(List<Veterinarian> veterinarians) {
         if (Utility.hasNotNull(Collections.singletonList(veterinarians))) {
             veterinarians.stream().filter(Objects::nonNull).forEach(v -> this.veterinarians.add(v));
-        } else {
-            throw new IllegalArgumentException("Veterinarians cannot be null or empty");
         }
     }
 
@@ -92,5 +90,13 @@ public class Division {
             throw new IllegalArgumentException("Vet clinic cannot be null");
         }
         this.vetClinic = vetClinic;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validatePetOwnerList() {
+        if (this.veterinarians.isEmpty()) {
+            throw new IllegalArgumentException("Division must have at least one Veterinarian before being saved or updated.");
+        }
     }
 }
